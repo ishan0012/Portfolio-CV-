@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -15,12 +15,18 @@
 
     <script>
         tailwind.config = {
+            darkMode: 'class', // Enables dark mode toggling via class
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
+                    fontFamily: { 
+                        sans: ['Outfit', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
+                    },
                     colors: {
                         slate: { 850: '#151e2e', 900: '#0f172a', 950: '#020617' },
-                        cyan: { 400: '#22d3ee', 500: '#06b6d4' }
+                        cyan: { 400: '#22d3ee', 500: '#06b6d4' },
+                        blue: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 600: '#1a73e8', 700: '#1557b0' }, // FAANG Blue
+                        gray: { 50: '#f8f9fa', 100: '#f3f4f6', 200: '#e5e7eb', 800: '#202124', 900: '#111827' }
                     }
                 }
             }
@@ -29,181 +35,203 @@
 
     <style>
         body {
-            background-color: #020617; 
-            color: #cbd5e1; 
+            /* Background transitions smoothly between light gray and deep slate */
+            background-color: #f8f9fa; 
+            transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
         }
+        
+        .dark body { background-color: #020617; }
 
-        /* Abstract Animated Background */
+        /* Dark Mode: Abstract Animated Background */
         .bg-orb {
-            position: absolute;
-            width: 600px;
-            height: 600px;
+            position: absolute; width: 600px; height: 600px;
             background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(60px);
+            border-radius: 50%; filter: blur(60px);
             animation: floatOrb 15s ease-in-out infinite alternate;
-            z-index: -1;
+            z-index: -1; display: none;
         }
         .bg-orb-2 {
-            position: absolute;
-            right: -100px;
-            top: 40%;
-            width: 500px;
-            height: 500px;
+            position: absolute; right: -100px; top: 40%; width: 500px; height: 500px;
             background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(60px);
+            border-radius: 50%; filter: blur(60px);
             animation: floatOrb 12s ease-in-out infinite alternate-reverse;
-            z-index: -1;
+            z-index: -1; display: none;
         }
+        .dark .bg-orb, .dark .bg-orb-2 { display: block; }
+
+        /* Light Mode: Clean Background Wash */
+        .light-wash {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(180deg, rgba(239,246,255,0.7) 0%, rgba(249,250,251,1) 100%);
+            z-index: -2; display: block;
+        }
+        .dark .light-wash { display: none; }
 
         @keyframes floatOrb {
             0% { transform: translate(0, 0) scale(1); }
             100% { transform: translate(100px, 50px) scale(1.1); }
         }
 
-        /* Premium Glassmorphism */
-        .glass-card {
+        /* Responsive Card Classes (Light & Dark logic baked in) */
+        .theme-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+        }
+        .theme-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.08);
+            border-color: #93c5fd;
+            transform: translateY(-4px);
+        }
+        
+        .dark .theme-card {
             background: rgba(30, 41, 59, 0.4); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .dark .theme-card:hover {
+            border-color: rgba(34,211,238,0.3);
+            box-shadow: 0 10px 30px rgba(34,211,238,0.05);
         }
 
         /* Nav Hover Underline */
         .nav-link::after {
-            content: "";
-            position: absolute;
-            width: 0%;
-            height: 2px;
-            left: 0;
-            bottom: -4px;
-            background: #22d3ee;
+            content: ""; position: absolute; width: 0%; height: 2px;
+            left: 0; bottom: -4px; background: #1a73e8;
             transition: 0.3s ease-in-out;
         }
+        .dark .nav-link::after { background: #22d3ee; }
         .nav-link:hover::after { width: 100%; }
 
         /* Typing cursor */
         .typing-cursor::after {
-            content: '|';
-            animation: blink 1s step-end infinite;
-            color: #22d3ee;
+            content: '|'; animation: blink 1s step-end infinite; color: #1a73e8;
         }
+        .dark .typing-cursor::after { color: #22d3ee; }
         @keyframes blink { 50% { opacity: 0; } }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        ::-webkit-scrollbar-track { background: #f8f9fa; }
+        .dark ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+        .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
     </style>
 </head>
 
-<body class="relative antialiased" id="top">
+<body class="relative antialiased text-gray-800 dark:text-slate-300 transition-colors duration-300" id="top">
 
+    <div class="light-wash"></div>
     <div class="bg-orb top-[-10%] left-[-10%]"></div>
     <div class="bg-orb-2"></div>
 
-    <div id="glow" class="fixed w-40 h-40 rounded-full pointer-events-none transform -translate-x-1/2 -translate-y-1/2 z-50 transition-opacity duration-300 hidden md:block" style="background: radial-gradient(circle, rgba(34,211,238,0.15) 0%, transparent 70%);"></div>
+    <div id="glow" class="fixed w-40 h-40 rounded-full pointer-events-none transform -translate-x-1/2 -translate-y-1/2 z-50 transition-opacity duration-300 hidden md:block dark:!bg-[radial-gradient(circle,rgba(34,211,238,0.15)_0%,transparent_70%)]" style="background: radial-gradient(circle, rgba(26,115,232,0.08) 0%, transparent 70%);"></div>
 
-    <nav class="glass-card fixed w-full z-40 top-0 transition-all duration-300 px-6 py-4 md:px-12 flex justify-between items-center border-b border-white/5">
-        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="text-2xl font-bold text-white tracking-tight hover:opacity-80 transition-opacity">
-            Ishan <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">Arora</span>
+    <nav class="fixed w-full z-40 top-0 transition-all duration-300 px-6 py-4 md:px-12 flex justify-between items-center bg-white/90 border-b border-gray-200 dark:bg-slate-900/60 dark:backdrop-blur-md dark:border-white/5">
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight hover:opacity-80 transition-opacity">
+            Ishan <span class="text-blue-600 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-cyan-400 dark:to-blue-500">Arora</span>
         </a>
         
-        <ul class="flex gap-5 md:gap-6 overflow-x-auto pb-1 md:pb-0 text-sm md:text-base font-medium text-slate-300 whitespace-nowrap scrollbar-hide">
-            <li><a href="#about" class="nav-link relative hover:text-white transition">About</a></li>
-            <li><a href="#education" class="nav-link relative hover:text-white transition">Education</a></li>
-            <li><a href="#training" class="nav-link relative hover:text-white transition">Training</a></li>
-            <li><a href="#certifications" class="nav-link relative hover:text-white transition">Certifications</a></li>
-            <li><a href="#skills" class="nav-link relative hover:text-white transition">Skills</a></li>
-            <li><a href="#projects" class="nav-link relative hover:text-white transition">Projects</a></li>
-            <li><a href="#contact" class="nav-link relative hover:text-white transition">Contact</a></li>
-        </ul>
+        <div class="flex items-center gap-6">
+            <ul class="hidden md:flex gap-6 text-sm md:text-base font-medium text-gray-600 dark:text-slate-300 whitespace-nowrap">
+                <li><a href="#about" class="nav-link relative hover:text-gray-900 dark:hover:text-white transition">About</a></li>
+                <li><a href="#education" class="nav-link relative hover:text-gray-900 dark:hover:text-white transition">Education</a></li>
+                <li><a href="#training" class="nav-link relative hover:text-gray-900 dark:hover:text-white transition">Training</a></li>
+                <li><a href="#certifications" class="nav-link relative hover:text-gray-900 dark:hover:text-white transition">Certifications</a></li>
+                <li><a href="#projects" class="nav-link relative hover:text-gray-900 dark:hover:text-white transition">Projects</a></li>
+            </ul>
+
+            <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-cyan-400 hover:bg-gray-200 dark:hover:bg-slate-700 transition duration-300 flex items-center justify-center w-10 h-10">
+                <i id="theme-icon" class="fas fa-sun"></i>
+            </button>
+        </div>
     </nav>
 
     <main class="max-w-6xl mx-auto px-6 pt-40 pb-16 space-y-40">
 
         <section class="flex flex-col-reverse md:flex-row items-center justify-between gap-12" data-aos="fade-up" data-aos-duration="1000">
             <div class="max-w-xl text-center md:text-left z-10">
-                <p class="text-cyan-400 font-medium mb-3 tracking-wider uppercase text-sm">Welcome to my portfolio</p>
-                <h1 class="text-5xl md:text-7xl font-bold mb-4 text-white">I'm <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">Ishan Arora</span></h1>
-                <p class="text-2xl md:text-3xl font-medium text-slate-400 mb-6 h-10"><span id="typing" class="text-white typing-cursor"></span></p>
-                <p class="text-slate-400 leading-relaxed mb-8 text-lg">A Computer Science & Engineering student specializing in predictive analytics, machine learning, and solving complex problems with efficient algorithms.</p>
+                <p class="text-blue-600 dark:text-cyan-400 font-semibold mb-3 tracking-wider uppercase text-sm">Welcome to my portfolio</p>
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-4 text-gray-900 dark:text-white tracking-tight">I'm <span class="text-blue-600 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-cyan-400 dark:to-blue-500">Ishan Arora</span></h1>
+                <p class="text-2xl md:text-3xl font-medium text-gray-600 dark:text-slate-400 mb-6 h-10"><span id="typing" class="text-gray-900 dark:text-white typing-cursor"></span></p>
+                <p class="text-gray-600 dark:text-slate-400 leading-relaxed mb-8 text-lg">A Computer Science & Engineering student specializing in predictive analytics, machine learning, and solving complex problems with efficient algorithms.</p>
                 
                 <div class="flex flex-wrap justify-center md:justify-start gap-5 mb-8">
-                    <a href="mailto:ishanarora0012@gmail.com" class="text-slate-400 hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fas fa-envelope"></i></a>
-                    <a href="tel:+919596835372" class="text-slate-400 hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1" title="+91 9596835372"><i class="fas fa-phone"></i></a>
-                    <a href="https://www.linkedin.com/in/ishan0012/" target="_blank" class="text-slate-400 hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/ishan0012" target="_blank" class="text-slate-400 hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fab fa-github"></i></a>
+                    <a href="mailto:ishanarora0012@gmail.com" class="text-gray-400 hover:text-blue-600 dark:text-slate-500 dark:hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fas fa-envelope"></i></a>
+                    <a href="tel:+919596835372" class="text-gray-400 hover:text-blue-600 dark:text-slate-500 dark:hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fas fa-phone"></i></a>
+                    <a href="https://www.linkedin.com/in/ishan0012/" target="_blank" class="text-gray-400 hover:text-[#0A66C2] dark:text-slate-500 dark:hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/ishan0012" target="_blank" class="text-gray-400 hover:text-gray-900 dark:text-slate-500 dark:hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fab fa-github"></i></a>
                 </div>
 
                 <div class="flex flex-wrap justify-center md:justify-start gap-4">
-                    <button onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:-translate-y-1 transition-all duration-300">Explore Projects</button>
-                    <a href="ishancv.pdf" download class="glass-card text-white border border-white/10 px-8 py-3 rounded-full font-medium hover:border-cyan-500/50 hover:text-cyan-400 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+                    <button onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})" class="bg-blue-600 text-white px-8 py-3 rounded-full font-medium hover:bg-blue-700 dark:bg-gradient-to-r dark:from-cyan-500 dark:to-blue-600 dark:hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:-translate-y-1 transition-all duration-300">Explore Projects</button>
+                    <a href="ishancv.pdf" download class="bg-white text-gray-700 border border-gray-200 px-8 py-3 rounded-full font-medium hover:text-blue-600 hover:border-blue-300 dark:bg-slate-800/40 dark:text-white dark:border-white/10 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 shadow-sm">
                         <i class="fas fa-download"></i> Download CV
                     </a>
                 </div>
             </div>
             <div class="w-64 md:w-[400px] relative z-10" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
-                <div class="absolute inset-0 bg-cyan-500 rounded-3xl rotate-6 opacity-20 blur-lg"></div>
-                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" alt="Coding Workspace" class="rounded-3xl shadow-2xl relative z-10 border border-white/10 object-cover aspect-square">
+                <div class="absolute inset-0 bg-blue-200 dark:bg-cyan-500 rounded-3xl rotate-6 opacity-30 dark:opacity-20 blur-lg"></div>
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" alt="Coding Workspace" class="rounded-3xl shadow-xl relative z-10 border border-white/50 dark:border-white/10 object-cover aspect-square">
             </div>
         </section>
 
         <section id="about" class="scroll-mt-32">
             <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
-                <div class="h-[2px] w-12 bg-cyan-500"></div>
-                <h2 class="text-3xl font-bold text-white">About Me</h2>
+                <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">About Me</h2>
             </div>
-            <div class="glass-card p-8 md:p-10 rounded-3xl relative overflow-hidden group" data-aos="fade-up">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition duration-500"></div>
-                <p class="text-slate-300 leading-relaxed mb-4 text-lg">I am pursuing a Bachelor of Technology in Computer Science and Engineering from Lovely Professional University. I am building a strong foundation in programming and data structures, and I enjoy working with languages like C++, Python, and full-stack web technologies.</p>
-                <p class="text-slate-300 leading-relaxed text-lg">I am particularly interested in creating data-driven dashboards using tools like Power BI and Python, as well as developing efficient machine learning models and user-friendly web applications. I am always eager to learn new technologies and improve my logical problem-solving skills.</p>
+            <div class="theme-card p-8 md:p-10 rounded-3xl relative overflow-hidden group" data-aos="fade-up">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 dark:bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-blue-100 dark:group-hover:bg-cyan-500/20 transition duration-500"></div>
+                <p class="text-gray-600 dark:text-slate-300 leading-relaxed mb-4 text-lg">I am pursuing a Bachelor of Technology in Computer Science and Engineering from Lovely Professional University. I am building a strong foundation in programming and data structures, and I enjoy working with languages like C++, Python, and full-stack web technologies.</p>
+                <p class="text-gray-600 dark:text-slate-300 leading-relaxed text-lg">I am particularly interested in creating data-driven dashboards using tools like Power BI and Python, as well as developing efficient machine learning models and user-friendly web applications. I am always eager to learn new technologies and improve my logical problem-solving skills.</p>
             </div>
         </section>
 
         <section id="education" class="scroll-mt-32">
             <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
-                <div class="h-[2px] w-12 bg-cyan-500"></div>
-                <h2 class="text-3xl font-bold text-white">Education</h2>
+                <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Education</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card p-8 rounded-3xl hover:-translate-y-3 hover:border-cyan-500/30 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 mb-6">
+                <div class="theme-card p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-cyan-500/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 mb-6 border border-blue-100 dark:border-transparent">
                         <i class="fas fa-graduation-cap fa-xl"></i>
                     </div>
-                    <h3 class="font-bold text-xl text-white mb-1">Lovely Professional University</h3>
-                    <p class="text-cyan-400 font-medium mb-4 text-sm">Bachelor of Technology - CSE</p>
-                    <div class="text-slate-400 text-sm space-y-1">
+                    <h3 class="font-bold text-xl text-gray-900 dark:text-white mb-1">Lovely Professional University</h3>
+                    <p class="text-blue-600 dark:text-cyan-400 font-medium mb-4 text-sm">Bachelor of Technology - CSE</p>
+                    <div class="text-gray-500 dark:text-slate-400 text-sm space-y-1">
                         <p><i class="far fa-calendar-alt mr-2"></i>Aug 2023 – Present</p>
-                        <p class="text-white font-medium mt-3 pt-3 border-t border-white/10">CGPA: 6.9</p>
+                        <p class="text-gray-900 dark:text-white font-medium mt-3 pt-3 border-t border-gray-100 dark:border-white/10">CGPA: 6.9</p>
                     </div>
                 </div>
                 
-                <div class="glass-card p-8 rounded-3xl hover:-translate-y-3 hover:border-cyan-500/30 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 mb-6">
+                <div class="theme-card p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-cyan-500/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 mb-6 border border-blue-100 dark:border-transparent">
                         <i class="fas fa-school fa-xl"></i>
                     </div>
-                    <h3 class="font-bold text-xl text-white mb-1">R.M Public School</h3>
-                    <p class="text-cyan-400 font-medium mb-4 text-sm">Intermediate</p>
-                    <div class="text-slate-400 text-sm space-y-1">
+                    <h3 class="font-bold text-xl text-gray-900 dark:text-white mb-1">R.M Public School</h3>
+                    <p class="text-blue-600 dark:text-cyan-400 font-medium mb-4 text-sm">Intermediate</p>
+                    <div class="text-gray-500 dark:text-slate-400 text-sm space-y-1">
                         <p><i class="far fa-calendar-alt mr-2"></i>Mar 2022 – May 2023</p>
-                        <p class="text-white font-medium mt-3 pt-3 border-t border-white/10">Percentage: 65.8%</p>
+                        <p class="text-gray-900 dark:text-white font-medium mt-3 pt-3 border-t border-gray-100 dark:border-white/10">Percentage: 65.8%</p>
                     </div>
                 </div>
 
-                <div class="glass-card p-8 rounded-3xl hover:-translate-y-3 hover:border-cyan-500/30 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 mb-6">
+                <div class="theme-card p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-cyan-500/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 mb-6 border border-blue-100 dark:border-transparent">
                         <i class="fas fa-book-open fa-xl"></i>
                     </div>
-                    <h3 class="font-bold text-xl text-white mb-1">Heritage School Jammu</h3>
-                    <p class="text-cyan-400 font-medium mb-4 text-sm">Matriculation</p>
-                    <div class="text-slate-400 text-sm space-y-1">
+                    <h3 class="font-bold text-xl text-gray-900 dark:text-white mb-1">Heritage School Jammu</h3>
+                    <p class="text-blue-600 dark:text-cyan-400 font-medium mb-4 text-sm">Matriculation</p>
+                    <div class="text-gray-500 dark:text-slate-400 text-sm space-y-1">
                         <p><i class="far fa-calendar-alt mr-2"></i>Mar 2020 – May 2021</p>
-                        <p class="text-white font-medium mt-3 pt-3 border-t border-white/10">Percentage: 70%</p>
+                        <p class="text-gray-900 dark:text-white font-medium mt-3 pt-3 border-t border-gray-100 dark:border-white/10">Percentage: 70%</p>
                     </div>
                 </div>
             </div>
@@ -211,28 +239,28 @@
 
         <section id="training" class="scroll-mt-32">
             <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
-                <div class="h-[2px] w-12 bg-cyan-500"></div>
-                <h2 class="text-3xl font-bold text-white">Technical Training</h2>
+                <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Technical Training</h2>
             </div>
             
-            <div class="glass-card p-8 md:p-10 rounded-3xl border-l-4 border-l-cyan-500 hover:shadow-[0_0_30px_rgba(34,211,238,0.1)] transition-all duration-500" data-aos="fade-up">
+            <div class="theme-card p-8 md:p-10 rounded-3xl !border-l-4 !border-l-blue-600 dark:!border-l-cyan-500" data-aos="fade-up">
                 <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                    <h3 class="font-bold text-2xl text-white">DSA with C and C++</h3>
-                    <span class="text-slate-400 text-sm mt-2 md:mt-0 whitespace-nowrap bg-white/5 px-4 py-2 rounded-full"><i class="far fa-calendar-alt mr-2 text-cyan-400"></i>Jun 2025 – Jul 2025</span>
+                    <h3 class="font-bold text-2xl text-gray-900 dark:text-white">DSA with C and C++</h3>
+                    <span class="text-gray-600 dark:text-slate-400 text-sm mt-2 md:mt-0 whitespace-nowrap bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-transparent px-4 py-2 rounded-full"><i class="far fa-calendar-alt mr-2 text-blue-600 dark:text-cyan-400"></i>Jun 2025 – Jul 2025</span>
                 </div>
-                <p class="text-cyan-400 font-medium mb-6 text-lg">Lovely Professional University</p>
+                <p class="text-blue-600 dark:text-cyan-400 font-medium mb-6 text-lg">Lovely Professional University</p>
                 
-                <ul class="list-none space-y-4 text-slate-300 leading-relaxed text-base">
+                <ul class="list-none space-y-4 text-gray-600 dark:text-slate-300 leading-relaxed text-base">
                     <li class="flex items-start gap-3">
-                        <i class="fas fa-check-circle text-cyan-500 mt-1"></i>
+                        <i class="fas fa-check-circle text-blue-600 dark:text-cyan-500 mt-1"></i>
                         <span>Build a strong foundation in Data Structures and Algorithms by learning core concepts such as arrays, linked lists, stacks, queues, sorting, and searching to enhance problem-solving and coding efficiency.</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <i class="fas fa-check-circle text-cyan-500 mt-1"></i>
+                        <i class="fas fa-check-circle text-blue-600 dark:text-cyan-500 mt-1"></i>
                         <span>Understanding of DSA fundamentals, algorithm design approach, time & space complexity an implementation of data structures, and hands-on practice in solving structured coding problems.</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <i class="fas fa-check-circle text-cyan-500 mt-1"></i>
+                        <i class="fas fa-check-circle text-blue-600 dark:text-cyan-500 mt-1"></i>
                         <span>Strengthened logic-building and coding accuracy, enabling faster problem-solving and improving overall programming efficiency for technical interviews and competitive coding.</span>
                     </li>
                 </ul>
@@ -241,37 +269,37 @@
 
         <section id="certifications" class="scroll-mt-32">
             <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
-                <div class="h-[2px] w-12 bg-cyan-500"></div>
-                <h2 class="text-3xl font-bold text-white">Certificates</h2>
+                <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Certificates</h2>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
-                <div class="glass-card p-6 rounded-3xl hover:-translate-y-2 hover:bg-slate-800/50 transition-all duration-300 border-t border-t-white/5" data-aos="fade-up" data-aos-delay="100">
-                    <div class="text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
-                    <h3 class="font-bold text-lg text-white mb-2 leading-tight">ChatGPT-4 Prompt Engineering: Generative AI & LLM</h3>
-                    <p class="text-cyan-400 text-sm font-medium mb-3">Udemy</p>
-                    <p class="text-slate-400 text-sm"><i class="far fa-calendar-alt mr-2"></i>Oct 2025</p>
+                <div class="theme-card p-6 rounded-3xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
+                    <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">ChatGPT-4 Prompt Engineering: Generative AI & LLM</h3>
+                    <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">Udemy</p>
+                    <p class="text-gray-500 dark:text-slate-400 text-xs mt-1">Oct 2025</p>
                 </div>
 
-                <div class="glass-card p-6 rounded-3xl hover:-translate-y-2 hover:bg-slate-800/50 transition-all duration-300 border-t border-t-white/5" data-aos="fade-up" data-aos-delay="200">
-                    <div class="text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
-                    <h3 class="font-bold text-lg text-white mb-2 leading-tight">Build Generative AI Apps and Solutions with No-Code Tools</h3>
-                    <p class="text-cyan-400 text-sm font-medium mb-3">Infosys</p>
-                    <p class="text-slate-400 text-sm"><i class="far fa-calendar-alt mr-2"></i>Aug 2025</p>
+                <div class="theme-card p-6 rounded-3xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
+                    <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">Build Generative AI Apps and Solutions with No-Code Tools</h3>
+                    <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">Infosys</p>
+                    <p class="text-gray-500 dark:text-slate-400 text-xs mt-1">Aug 2025</p>
                 </div>
 
-                <div class="glass-card p-6 rounded-3xl hover:-translate-y-2 hover:bg-slate-800/50 transition-all duration-300 border-t border-t-white/5" data-aos="fade-up" data-aos-delay="300">
-                    <div class="text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
-                    <h3 class="font-bold text-lg text-white mb-2 leading-tight">Computer Communications Specialization</h3>
-                    <p class="text-cyan-400 text-sm font-medium mb-3">Coursera</p>
-                    <p class="text-slate-400 text-sm"><i class="far fa-calendar-alt mr-2"></i>Apr 2025</p>
+                <div class="theme-card p-6 rounded-3xl" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
+                    <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">Computer Communications Specialization</h3>
+                    <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">Coursera</p>
+                    <p class="text-gray-500 dark:text-slate-400 text-xs mt-1">Apr 2025</p>
                 </div>
 
-                <div class="glass-card p-6 rounded-3xl hover:-translate-y-2 hover:bg-slate-800/50 transition-all duration-300 border-t border-t-white/5" data-aos="fade-up" data-aos-delay="400">
-                    <div class="text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
-                    <h3 class="font-bold text-lg text-white mb-2 leading-tight">Data Science Fundamentals</h3>
-                    <p class="text-cyan-400 text-sm font-medium mb-3">Udemy</p>
-                    <p class="text-slate-400 text-sm"><i class="far fa-calendar-alt mr-2"></i>Feb 2024</p>
+                <div class="theme-card p-6 rounded-3xl" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
+                    <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">Data Science Fundamentals</h3>
+                    <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">Udemy</p>
+                    <p class="text-gray-500 dark:text-slate-400 text-xs mt-1">Feb 2024</p>
                 </div>
 
             </div>
@@ -279,40 +307,40 @@
 
         <section id="skills" class="scroll-mt-32">
             <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
-                <div class="h-[2px] w-12 bg-cyan-500"></div>
-                <h2 class="text-3xl font-bold text-white">Skills</h2>
+                <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Skills</h2>
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" data-aos="fade-up">
-                <div class="glass-card p-8 rounded-3xl">
-                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-                        <div class="p-2 bg-cyan-500/10 rounded-lg"><i class="fas fa-code text-cyan-400"></i></div> 
+                <div class="theme-card p-8 rounded-3xl">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                        <div class="p-2 bg-blue-50 border border-blue-100 dark:border-transparent dark:bg-cyan-500/10 rounded-lg"><i class="fas fa-code text-blue-600 dark:text-cyan-400"></i></div> 
                         Languages & Tools/Platforms
                     </h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">C++</span>
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">Python</span>
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">C</span>
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">Java</span>
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">HTML/CSS</span>
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">Apex</span>
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">MySQL</span>
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">Power BI</span>
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">MS Excel – Advanced</span>
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">AutoCAD</span>
+                    <div class="flex flex-wrap gap-2 md:gap-3">
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">C++</span>
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Python</span>
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">C</span>
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Java</span>
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">HTML/CSS</span>
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Apex</span>
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">MySQL</span>
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Power BI</span>
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">MS Excel – Advanced</span>
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">AutoCAD</span>
                     </div>
                 </div>
 
-                <div class="glass-card p-8 rounded-3xl">
-                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-                        <div class="p-2 bg-cyan-500/10 rounded-lg"><i class="fas fa-users text-cyan-400"></i></div> 
+                <div class="theme-card p-8 rounded-3xl">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                        <div class="p-2 bg-blue-50 border border-blue-100 dark:border-transparent dark:bg-cyan-500/10 rounded-lg"><i class="fas fa-users text-blue-600 dark:text-cyan-400"></i></div> 
                         Soft Skills
                     </h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">Problem-Solving</span>
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">Team Management</span>
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">Adaptability</span>
-                        <span class="px-4 py-2 bg-slate-800/60 border border-white/5 rounded-xl text-slate-300 text-sm hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">Leadership</span>
+                    <div class="flex flex-wrap gap-2 md:gap-3">
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Problem-Solving</span>
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Team Management</span>
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Adaptability</span>
+                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Leadership</span>
                     </div>
                 </div>
             </div>
@@ -320,20 +348,25 @@
 
         <section id="projects" class="scroll-mt-32">
             <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
-                <div class="h-[2px] w-12 bg-cyan-500"></div>
-                <h2 class="text-3xl font-bold text-white">Projects</h2>
+                <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Projects</h2>
             </div>
             
             <div class="grid grid-cols-1 gap-8">
                 
-                <div class="glass-card rounded-3xl p-8 md:p-10 hover:border-cyan-500/30 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+                <div class="theme-card rounded-3xl p-8 md:p-10" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                        <h3 class="font-bold text-2xl text-white">Customer Churn Intelligence & XAI System</h3>
-                        <span class="text-slate-400 text-sm mt-2 md:mt-0 whitespace-nowrap"><i class="far fa-calendar-alt mr-2"></i>Mar 2025</span>
+                        <h3 class="font-bold text-2xl text-gray-900 dark:text-white">Customer Churn Intelligence & XAI System</h3>
+                        <span class="text-gray-500 dark:text-slate-400 text-sm mt-2 md:mt-0 whitespace-nowrap"><i class="far fa-calendar-alt mr-2"></i>Mar 2025</span>
                     </div>
-                    <p class="text-sm text-cyan-400 font-semibold mb-6 uppercase tracking-wider border border-cyan-500/30 inline-block px-4 py-1.5 rounded-full bg-cyan-500/10">Python, XGBoost, NLP, SHAP</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Python</span>
+                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">XGBoost</span>
+                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">NLP</span>
+                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">SHAP</span>
+                    </div>
                     
-                    <ul class="list-disc pl-5 space-y-3 text-slate-300 leading-relaxed text-base">
+                    <ul class="list-disc pl-5 space-y-3 text-gray-600 dark:text-slate-300 leading-relaxed text-base">
                         <li>Developed an end-to-end predictive framework to forecast customer attrition with 85%+ accuracy by leveraging XGBoost on 7,000+ service records.</li>
                         <li>Engineered a Multi-Modal pipeline by integrating NLP (TextBlob) to extract sentiment scores from raw customer feedback, improving model sensitivity to service dissatisfaction.</li>
                         <li>Implemented Explainable AI (SHAP) to move beyond "black-box" modeling, providing granular transparency into feature impacts like Contract Type and Monthly Charges.</li>
@@ -341,14 +374,18 @@
                     </ul>
                 </div>
 
-                <div class="glass-card rounded-3xl p-8 md:p-10 hover:border-cyan-500/30 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                <div class="theme-card rounded-3xl p-8 md:p-10" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                        <h3 class="font-bold text-2xl text-white">Credit Risk Assessment & Default Prediction</h3>
-                        <span class="text-slate-400 text-sm mt-2 md:mt-0 whitespace-nowrap"><i class="far fa-calendar-alt mr-2"></i>Apr 2025</span>
+                        <h3 class="font-bold text-2xl text-gray-900 dark:text-white">Credit Risk Assessment & Default Prediction</h3>
+                        <span class="text-gray-500 dark:text-slate-400 text-sm mt-2 md:mt-0 whitespace-nowrap"><i class="far fa-calendar-alt mr-2"></i>Apr 2025</span>
                     </div>
-                    <p class="text-sm text-cyan-400 font-semibold mb-6 uppercase tracking-wider border border-cyan-500/30 inline-block px-4 py-1.5 rounded-full bg-cyan-500/10">Python, Scikit-Learn, Random Forest</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Python</span>
+                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Scikit-Learn</span>
+                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Random Forest</span>
+                    </div>
                     
-                    <ul class="list-disc pl-5 space-y-3 text-slate-300 leading-relaxed text-base">
+                    <ul class="list-disc pl-5 space-y-3 text-gray-600 dark:text-slate-300 leading-relaxed text-base">
                         <li>Developed a robust credit scoring model to predict the probability of loan default for 5,000+ applicants, utilizing Random Forest to achieve high ROC-AUC precision.</li>
                         <li>Engineered critical financial features, such as Debt-to-Income (DTI) ratios, to better quantify applicant repayment capacity and improve model sensitivity.</li>
                         <li>Addressed Class Imbalance by implementing balanced class weighting techniques, ensuring the effective identification of high-risk minority cases in a skewed dataset.</li>
@@ -356,14 +393,18 @@
                     </ul>
                 </div>
 
-                <div class="glass-card rounded-3xl p-8 md:p-10 hover:border-cyan-500/30 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+                <div class="theme-card rounded-3xl p-8 md:p-10" data-aos="fade-up" data-aos-delay="300">
                     <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                        <h3 class="font-bold text-2xl text-white">Automotive Intelligence & Predictive Analytics</h3>
-                        <span class="text-slate-400 text-sm mt-2 md:mt-0 whitespace-nowrap"><i class="far fa-calendar-alt mr-2"></i>Mar 2026</span>
+                        <h3 class="font-bold text-2xl text-gray-900 dark:text-white">Automotive Intelligence & Predictive Analytics</h3>
+                        <span class="text-gray-500 dark:text-slate-400 text-sm mt-2 md:mt-0 whitespace-nowrap"><i class="far fa-calendar-alt mr-2"></i>Mar 2026</span>
                     </div>
-                    <p class="text-sm text-cyan-400 font-semibold mb-6 uppercase tracking-wider border border-cyan-500/30 inline-block px-4 py-1.5 rounded-full bg-cyan-500/10">Python, Scikit-Learn, Plotly</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Python</span>
+                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Scikit-Learn</span>
+                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Plotly</span>
+                    </div>
                     
-                    <ul class="list-disc pl-5 space-y-3 text-slate-300 leading-relaxed text-base">
+                    <ul class="list-disc pl-5 space-y-3 text-gray-600 dark:text-slate-300 leading-relaxed text-base">
                         <li>Developed a predictive regression model to estimate vehicle fuel efficiency (MPG) based on engine displacement and weight, achieving significant R-squared accuracy.</li>
                         <li>Engineered interactive multi-dimensional visualizations using Plotly to track efficiency trends across global automotive markets (USA, Japan, and Europe).</li>
                         <li>Quantified the impact of vehicle weight on environmental footprints through advanced statistical correlation mapping and Seaborn violin plots.</li>
@@ -375,37 +416,37 @@
         </section>
 
         <section id="contact" class="scroll-mt-32 pb-10">
-            <div class="glass-card p-12 md:p-20 rounded-[3rem] text-center relative overflow-hidden border border-cyan-500/20 shadow-[0_0_50px_rgba(34,211,238,0.1)]" data-aos="zoom-in" data-aos-duration="1000">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
-                <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3"></div>
+            <div class="theme-card p-12 md:p-20 rounded-[3rem] text-center relative overflow-hidden" data-aos="zoom-in" data-aos-duration="1000">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-100 dark:bg-cyan-500/20 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-gray-100 dark:bg-blue-500/20 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3"></div>
                 
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white relative z-10">Let's Work Together</h2>
-                <p class="text-slate-400 mb-10 max-w-2xl mx-auto relative z-10 text-lg">I am currently open to internships and developer opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 text-gray-900 dark:text-white relative z-10 tracking-tight">Let's Work Together</h2>
+                <p class="text-gray-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto relative z-10 text-lg">I am currently open to internships and developer opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
                 
                 <div class="flex flex-col items-center gap-8 relative z-10">
                     
                     <div class="flex flex-col md:flex-row gap-6">
-                        <div class="inline-flex bg-slate-900/80 border border-white/10 p-4 rounded-2xl hover:border-cyan-500/50 hover:bg-slate-800 transition-all cursor-pointer group shadow-xl" id="email-box">
-                            <p class="text-lg font-medium text-white flex items-center gap-4">
-                                <span class="bg-cyan-500/20 text-cyan-400 p-3 rounded-xl group-hover:scale-110 transition-transform"><i class="fas fa-envelope"></i></span>
+                        <div class="inline-flex bg-white dark:bg-slate-900/80 border border-gray-200 dark:border-white/10 p-4 rounded-2xl hover:border-blue-400 dark:hover:border-cyan-500/50 shadow-sm hover:shadow-md transition-all cursor-pointer group" id="email-box">
+                            <p class="text-lg font-medium text-gray-900 dark:text-white flex items-center gap-4">
+                                <span class="bg-blue-50 dark:bg-cyan-500/20 text-blue-600 dark:text-cyan-400 p-3 rounded-xl border border-blue-100 dark:border-transparent group-hover:bg-blue-600 group-hover:text-white dark:group-hover:scale-110 transition-all"><i class="fas fa-envelope"></i></span>
                                 <span id="email-text">ishanarora0012@gmail.com</span>
-                                <i class="far fa-copy text-sm text-slate-500 group-hover:text-cyan-400 transition ml-2"></i>
+                                <i class="far fa-copy text-sm text-gray-400 dark:text-slate-500 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition ml-2"></i>
                             </p>
                         </div>
 
-                        <a href="tel:+919596835372" class="inline-flex bg-slate-900/80 border border-white/10 p-4 rounded-2xl hover:border-cyan-500/50 hover:bg-slate-800 transition-all group shadow-xl">
-                            <p class="text-lg font-medium text-white flex items-center gap-4">
-                                <span class="bg-cyan-500/20 text-cyan-400 p-3 rounded-xl group-hover:scale-110 transition-transform"><i class="fas fa-phone"></i></span>
+                        <a href="tel:+919596835372" class="inline-flex bg-white dark:bg-slate-900/80 border border-gray-200 dark:border-white/10 p-4 rounded-2xl hover:border-blue-400 dark:hover:border-cyan-500/50 shadow-sm hover:shadow-md transition-all group">
+                            <p class="text-lg font-medium text-gray-900 dark:text-white flex items-center gap-4">
+                                <span class="bg-blue-50 dark:bg-cyan-500/20 text-blue-600 dark:text-cyan-400 p-3 rounded-xl border border-blue-100 dark:border-transparent group-hover:bg-blue-600 group-hover:text-white dark:group-hover:scale-110 transition-all"><i class="fas fa-phone"></i></span>
                                 <span>+91 9596835372</span>
                             </p>
                         </a>
                     </div>
 
-                    <div class="flex gap-6">
-                        <a href="https://www.linkedin.com/in/ishan0012/" target="_blank" class="flex items-center gap-3 bg-slate-900/80 border border-white/10 px-6 py-3 rounded-xl text-slate-300 hover:text-white hover:border-cyan-500/50 hover:-translate-y-1 transition-all">
+                    <div class="flex gap-6 mt-2">
+                        <a href="https://www.linkedin.com/in/ishan0012/" target="_blank" class="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-gray-200 dark:border-white/10 px-6 py-3 rounded-xl text-gray-600 dark:text-slate-300 font-medium hover:text-blue-600 dark:hover:text-white hover:border-blue-300 dark:hover:border-cyan-500/50 hover:shadow-sm hover:-translate-y-1 transition-all">
                             <i class="fab fa-linkedin text-xl text-[#0A66C2]"></i> <span>LinkedIn</span>
                         </a>
-                        <a href="https://github.com/ishan0012" target="_blank" class="flex items-center gap-3 bg-slate-900/80 border border-white/10 px-6 py-3 rounded-xl text-slate-300 hover:text-white hover:border-cyan-500/50 hover:-translate-y-1 transition-all">
+                        <a href="https://github.com/ishan0012" target="_blank" class="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-gray-200 dark:border-white/10 px-6 py-3 rounded-xl text-gray-600 dark:text-slate-300 font-medium hover:text-gray-900 dark:hover:text-white hover:border-gray-400 dark:hover:border-cyan-500/50 hover:shadow-sm hover:-translate-y-1 transition-all">
                             <i class="fab fa-github text-xl"></i> <span>GitHub</span>
                         </a>
                     </div>
@@ -415,15 +456,17 @@
 
     </main>
 
-    <footer class="py-8 text-center border-t border-white/5 relative z-10">
-        <p class="text-slate-600 text-sm">© 2026 Ishan Arora. Designed with modern web standards.</p>
+    <footer class="py-8 text-center border-t border-gray-200 dark:border-white/5 bg-white dark:bg-transparent transition-colors">
+        <p class="text-gray-500 dark:text-slate-600 font-medium text-sm">© 2026 Ishan Arora. Designed with modern web standards.</p>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <script>
+        // 1. Initialize AOS Animations
         AOS.init({ once: true, offset: 100 });
 
+        // 2. Mouse Glow Effect
         const glow = document.getElementById("glow");
         document.addEventListener("mousemove", (e) => {
             glow.style.left = e.clientX + "px";
@@ -431,6 +474,36 @@
         });
         window.addEventListener('touchstart', () => glow.style.display = 'none');
 
+        // 3. Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const htmlElement = document.documentElement;
+
+        // Check for saved user preference, if any, on load
+        if (localStorage.getItem('color-theme') === 'light') {
+            htmlElement.classList.remove('dark');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        } else {
+            // Default to dark
+            htmlElement.classList.add('dark');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            if (htmlElement.classList.contains('dark')) {
+                // Switch to Light Mode
+                htmlElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            } else {
+                // Switch to Dark Mode
+                htmlElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+        });
+
+        // 4. Typing Animation
         const textArray = ["Data Scientist", "Machine Learning Enthusiast", "Problem Solver"];
         let textIndex = 0;
         let charIndex = 0;
@@ -458,23 +531,31 @@
                 textIndex = (textIndex + 1) % textArray.length;
                 typingSpeed = 500;
             }
-
             setTimeout(typeEffect, typingSpeed);
         }
         setTimeout(typeEffect, 1000);
 
+        // 5. Copy Email Logic (Theme Aware)
         const emailBox = document.getElementById("email-box");
         const emailText = document.getElementById("email-text");
         const originalText = "ishanarora0012@gmail.com"; 
 
         emailBox.addEventListener("click", () => {
             navigator.clipboard.writeText(originalText);
-            emailText.innerHTML = "Copied! <i class='fas fa-check text-green-400 ml-2'></i>";
-            emailBox.style.borderColor = "#22d3ee";
+            emailText.innerHTML = "Copied! <i class='fas fa-check text-green-500 dark:text-green-400 ml-2'></i>";
+            
+            // Adjust flash color based on theme
+            if(document.documentElement.classList.contains('dark')){
+                emailBox.style.borderColor = "#22d3ee";
+            } else {
+                emailBox.style.borderColor = "#2563eb";
+                emailBox.style.backgroundColor = "#eff6ff";
+            }
             
             setTimeout(() => {
                 emailText.innerText = originalText + "";
-                emailBox.style.borderColor = "rgba(255,255,255,0.1)";
+                emailBox.style.borderColor = "";
+                emailBox.style.backgroundColor = ""; // Reset
             }, 2000);
         });
     </script>
