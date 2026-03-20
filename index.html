@@ -15,7 +15,7 @@
 
     <script>
         tailwind.config = {
-            darkMode: 'class', // Enables dark mode toggling via class
+            darkMode: 'class', 
             theme: {
                 extend: {
                     fontFamily: { 
@@ -25,7 +25,7 @@
                     colors: {
                         slate: { 850: '#151e2e', 900: '#0f172a', 950: '#020617' },
                         cyan: { 400: '#22d3ee', 500: '#06b6d4' },
-                        blue: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 600: '#1a73e8', 700: '#1557b0' }, // FAANG Blue
+                        blue: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 600: '#1a73e8', 700: '#1557b0' }, 
                         gray: { 50: '#f8f9fa', 100: '#f3f4f6', 200: '#e5e7eb', 800: '#202124', 900: '#111827' }
                     }
                 }
@@ -35,7 +35,6 @@
 
     <style>
         body {
-            /* Background transitions smoothly between light gray and deep slate */
             background-color: #f8f9fa; 
             transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
@@ -43,7 +42,6 @@
         
         .dark body { background-color: #020617; }
 
-        /* Dark Mode: Abstract Animated Background */
         .bg-orb {
             position: absolute; width: 600px; height: 600px;
             background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%);
@@ -60,7 +58,6 @@
         }
         .dark .bg-orb, .dark .bg-orb-2 { display: block; }
 
-        /* Light Mode: Clean Background Wash */
         .light-wash {
             position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
             background: linear-gradient(180deg, rgba(239,246,255,0.7) 0%, rgba(249,250,251,1) 100%);
@@ -73,17 +70,16 @@
             100% { transform: translate(100px, 50px) scale(1.1); }
         }
 
-        /* Responsive Card Classes (Light & Dark logic baked in) */
         .theme-card {
             background: #ffffff;
             border: 1px solid #e5e7eb;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             transition: all 0.3s ease;
+            transform-style: preserve-3d; /* For 3D Tilt */
         }
         .theme-card:hover {
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.08);
             border-color: #93c5fd;
-            transform: translateY(-4px);
         }
         
         .dark .theme-card {
@@ -97,23 +93,32 @@
             box-shadow: 0 10px 30px rgba(34,211,238,0.05);
         }
 
-        /* Nav Hover Underline */
+        .nav-link { position: relative; }
         .nav-link::after {
             content: ""; position: absolute; width: 0%; height: 2px;
             left: 0; bottom: -4px; background: #1a73e8;
             transition: 0.3s ease-in-out;
         }
         .dark .nav-link::after { background: #22d3ee; }
-        .nav-link:hover::after { width: 100%; }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        .nav-link.active { color: #1a73e8; font-weight: 600; }
+        .dark .nav-link.active { color: #22d3ee; }
 
-        /* Typing cursor */
         .typing-cursor::after {
             content: '|'; animation: blink 1s step-end infinite; color: #1a73e8;
         }
         .dark .typing-cursor::after { color: #22d3ee; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* Custom Scrollbar */
+        /* Floating effect for portrait */
+        @keyframes floatPortrait {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-20px); }
+        }
+        .animate-float-portrait {
+            animation: floatPortrait 6s ease-in-out infinite alternate;
+        }
+
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f8f9fa; }
         .dark ::-webkit-scrollbar-track { background: #0f172a; }
@@ -126,24 +131,27 @@
 
 <body class="relative antialiased text-gray-800 dark:text-slate-300 transition-colors duration-300" id="top">
 
+    <div id="scroll-progress" class="fixed top-0 left-0 h-[3px] bg-blue-600 dark:bg-cyan-400 z-50 transition-all duration-75 w-0 shadow-[0_0_10px_rgba(37,99,235,0.5)] dark:shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
+
     <div class="light-wash"></div>
     <div class="bg-orb top-[-10%] left-[-10%]"></div>
     <div class="bg-orb-2"></div>
 
     <div id="glow" class="fixed w-40 h-40 rounded-full pointer-events-none transform -translate-x-1/2 -translate-y-1/2 z-50 transition-opacity duration-300 hidden md:block dark:!bg-[radial-gradient(circle,rgba(34,211,238,0.15)_0%,transparent_70%)]" style="background: radial-gradient(circle, rgba(26,115,232,0.08) 0%, transparent 70%);"></div>
 
-    <nav class="fixed w-full z-40 top-0 transition-all duration-300 px-6 py-4 md:px-12 flex justify-between items-center bg-white/90 border-b border-gray-200 dark:bg-slate-900/60 dark:backdrop-blur-md dark:border-white/5">
+    <nav class="fixed w-full z-40 top-0 transition-all duration-300 px-6 py-4 md:px-12 flex justify-between items-center bg-white/90 border-b border-gray-200 dark:bg-slate-900/60 dark:backdrop-blur-md dark:border-white/5 mt-[3px]">
         <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight hover:opacity-80 transition-opacity">
             Ishan <span class="text-blue-600 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-cyan-400 dark:to-blue-500">Arora</span>
         </a>
         
         <div class="flex items-center gap-6">
             <ul class="hidden md:flex gap-6 text-sm md:text-base font-medium text-gray-600 dark:text-slate-300 whitespace-nowrap">
-                <li><a href="#about" class="nav-link relative hover:text-gray-900 dark:hover:text-white transition">About</a></li>
-                <li><a href="#education" class="nav-link relative hover:text-gray-900 dark:hover:text-white transition">Education</a></li>
-                <li><a href="#training" class="nav-link relative hover:text-gray-900 dark:hover:text-white transition">Training</a></li>
-                <li><a href="#certifications" class="nav-link relative hover:text-gray-900 dark:hover:text-white transition">Certifications</a></li>
-                <li><a href="#projects" class="nav-link relative hover:text-gray-900 dark:hover:text-white transition">Projects</a></li>
+                <li><a href="#about" class="nav-link hover:text-gray-900 dark:hover:text-white transition">About</a></li>
+                <li><a href="#education" class="nav-link hover:text-gray-900 dark:hover:text-white transition">Education</a></li>
+                <li><a href="#training" class="nav-link hover:text-gray-900 dark:hover:text-white transition">Training</a></li>
+                <li><a href="#certificates" class="nav-link hover:text-gray-900 dark:hover:text-white transition">Certificates</a></li>
+                <li><a href="#skills" class="nav-link hover:text-gray-900 dark:hover:text-white transition">Skills</a></li>
+                <li><a href="#projects" class="nav-link hover:text-gray-900 dark:hover:text-white transition">Projects</a></li>
             </ul>
 
             <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-cyan-400 hover:bg-gray-200 dark:hover:bg-slate-700 transition duration-300 flex items-center justify-center w-10 h-10">
@@ -152,9 +160,9 @@
         </div>
     </nav>
 
-    <main class="max-w-6xl mx-auto px-6 pt-40 pb-16 space-y-40">
+    <main class="max-w-7xl mx-auto px-6 pt-40 pb-16 space-y-40">
 
-        <section class="flex flex-col-reverse md:flex-row items-center justify-between gap-12" data-aos="fade-up" data-aos-duration="1000">
+        <section id="hero" class="flex flex-col-reverse md:flex-row items-center justify-between gap-12 scroll-mt-32" data-aos="fade-up" data-aos-duration="1000">
             <div class="max-w-xl text-center md:text-left z-10">
                 <p class="text-blue-600 dark:text-cyan-400 font-semibold mb-3 tracking-wider uppercase text-sm">Welcome to my portfolio</p>
                 <h1 class="text-5xl md:text-7xl font-extrabold mb-4 text-gray-900 dark:text-white tracking-tight">I'm <span class="text-blue-600 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-cyan-400 dark:to-blue-500">Ishan Arora</span></h1>
@@ -175,25 +183,42 @@
                     </a>
                 </div>
             </div>
-            <div class="w-64 md:w-[400px] relative z-10" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
-                <div class="absolute inset-0 bg-blue-200 dark:bg-cyan-500 rounded-3xl rotate-6 opacity-30 dark:opacity-20 blur-lg"></div>
-                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" alt="Coding Workspace" class="rounded-3xl shadow-xl relative z-10 border border-white/50 dark:border-white/10 object-cover aspect-square">
+            
+            <div class="w-64 md:w-[400px] relative z-10 group cursor-pointer" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
+                <div class="absolute inset-0 bg-blue-400 dark:bg-cyan-500 rounded-3xl rotate-6 opacity-30 dark:opacity-20 blur-lg transition-all duration-500 group-hover:rotate-12 group-hover:opacity-50 group-hover:scale-110"></div>
+                <img src="1000147806.jpg" alt="Ishan Arora Portrait" class="animate-float-portrait rounded-3xl shadow-xl relative z-10 border border-white/50 dark:border-white/10 object-cover aspect-square transition-all duration-500 group-hover:-translate-y-4 group-hover:scale-105 group-hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] dark:group-hover:shadow-[0_20px_50px_rgba(34,211,238,0.2)]">
             </div>
         </section>
 
-        <section id="about" class="scroll-mt-32">
+        <section id="about" class="scroll-mt-32 max-w-6xl mx-auto section-spy">
             <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
                 <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-white">About Me</h2>
             </div>
-            <div class="theme-card p-8 md:p-10 rounded-3xl relative overflow-hidden group" data-aos="fade-up">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 dark:bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-blue-100 dark:group-hover:bg-cyan-500/20 transition duration-500"></div>
-                <p class="text-gray-600 dark:text-slate-300 leading-relaxed mb-4 text-lg">I am pursuing a Bachelor of Technology in Computer Science and Engineering from Lovely Professional University. I am building a strong foundation in programming and data structures, and I enjoy working with languages like C++, Python, and full-stack web technologies.</p>
-                <p class="text-gray-600 dark:text-slate-300 leading-relaxed text-lg">I am particularly interested in creating data-driven dashboards using tools like Power BI and Python, as well as developing efficient machine learning models and user-friendly web applications. I am always eager to learn new technologies and improve my logical problem-solving skills.</p>
+            <div class="theme-card p-8 md:p-12 rounded-3xl relative overflow-hidden group" data-aos="fade-up">
+                <div class="absolute top-0 right-0 w-40 h-40 bg-blue-50 dark:bg-cyan-500/10 rounded-full blur-3xl group-hover:bg-blue-100 dark:group-hover:bg-cyan-500/20 transition duration-500"></div>
+                
+                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Turning Data into Intelligence</h3>
+                <p class="text-gray-600 dark:text-slate-300 leading-relaxed mb-6 text-lg">
+                    I am a proactive Computer Science and Engineering undergraduate at Lovely Professional University, deeply passionate about translating raw, complex data into actionable insights. With a strong academic foundation in Data Structures and Algorithms, I specialize in architecting predictive models and machine learning pipelines using tools like Python, Scikit-Learn, and XGBoost.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                    <div class="bg-gray-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-gray-100 dark:border-white/5">
+                        <i class="fas fa-brain text-blue-600 dark:text-cyan-400 text-3xl mb-4"></i>
+                        <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Predictive Modeling & XAI</h4>
+                        <p class="text-gray-600 dark:text-slate-400 text-base">My recent work revolves around Predictive Analytics and Explainable AI (SHAP). From developing multi-modal systems to forecast customer churn using NLP, to building precise credit risk assessment models, I thrive on solving high-stakes, real-world business problems.</p>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-gray-100 dark:border-white/5">
+                        <i class="fas fa-chart-line text-blue-600 dark:text-cyan-400 text-3xl mb-4"></i>
+                        <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Data Visualization</h4>
+                        <p class="text-gray-600 dark:text-slate-400 text-base">Beyond model building, I have a keen eye for visual storytelling. I leverage tools like Power BI and Plotly to make dense statistical findings accessible to non-technical stakeholders, ensuring data-driven solutions lead to clear decision-making.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="education" class="scroll-mt-32">
+        <section id="education" class="scroll-mt-32 max-w-6xl mx-auto section-spy">
             <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
                 <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Education</h2>
@@ -237,7 +262,7 @@
             </div>
         </section>
 
-        <section id="training" class="scroll-mt-32">
+        <section id="training" class="scroll-mt-32 max-w-6xl mx-auto section-spy">
             <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
                 <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Technical Training</h2>
@@ -245,7 +270,7 @@
             
             <div class="theme-card p-8 md:p-10 rounded-3xl !border-l-4 !border-l-blue-600 dark:!border-l-cyan-500" data-aos="fade-up">
                 <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                    <h3 class="font-bold text-2xl text-gray-900 dark:text-white">DSA with C and C++</h3>
+                    <h3 class="font-bold text-2xl text-gray-900 dark:text-white">Data Structures and Algorithms with C++</h3>
                     <span class="text-gray-600 dark:text-slate-400 text-sm mt-2 md:mt-0 whitespace-nowrap bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-transparent px-4 py-2 rounded-full"><i class="far fa-calendar-alt mr-2 text-blue-600 dark:text-cyan-400"></i>Jun 2025 – Jul 2025</span>
                 </div>
                 <p class="text-blue-600 dark:text-cyan-400 font-medium mb-6 text-lg">Lovely Professional University</p>
@@ -264,48 +289,74 @@
                         <span>Strengthened logic-building and coding accuracy, enabling faster problem-solving and improving overall programming efficiency for technical interviews and competitive coding.</span>
                     </li>
                 </ul>
+
+                <div class="mt-8 pt-6 border-t border-gray-100 dark:border-white/10 mt-auto">
+                    <a href="Screenshot (4).png" target="_blank" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors">
+                        <i class="fas fa-certificate text-lg"></i> View Certificate
+                    </a>
+                </div>
             </div>
         </section>
 
-        <section id="certifications" class="scroll-mt-32">
+        <section id="certificates" class="scroll-mt-32 max-w-6xl mx-auto section-spy">
             <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
                 <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Certificates</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
-                <div class="theme-card p-6 rounded-3xl" data-aos="fade-up" data-aos-delay="100">
+                <div class="theme-card p-6 rounded-3xl flex flex-col h-full" data-aos="fade-up" data-aos-delay="100" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                     <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
-                    <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">ChatGPT-4 Prompt Engineering: Generative AI & LLM</h3>
+                    <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">The Bits and Bytes of Computer Networking</h3>
+                    <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">Google</p>
+                    <p class="text-gray-500 dark:text-slate-400 text-xs mt-1 mb-4">Sep 2024</p>
+                    <div class="mt-auto pt-4 border-t border-gray-100 dark:border-white/10">
+                        <a href="https://coursera.org/share/c700bff28aa410df77edc2875241aa4e" target="_blank" class="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors z-10 relative">
+                            <i class="fas fa-external-link-alt"></i> View Certificate
+                        </a>
+                    </div>
+                </div>
+
+                <div class="theme-card p-6 rounded-3xl flex flex-col h-full" data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                    <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
+                    <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">Computer Communications</h3>
+                    <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">University of Colorado System</p>
+                    <p class="text-gray-500 dark:text-slate-400 text-xs mt-1 mb-4">Nov 2024</p>
+                    <div class="mt-auto pt-4 border-t border-gray-100 dark:border-white/10">
+                        <a href="https://coursera.org/share/43f54083f33fbc70095df7fd59aa1a86" target="_blank" class="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors z-10 relative">
+                            <i class="fas fa-external-link-alt"></i> View Certificate
+                        </a>
+                    </div>
+                </div>
+
+                <div class="theme-card p-6 rounded-3xl flex flex-col h-full" data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                    <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
+                    <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">Build Generative AI Apps and Solutions with No-Code</h3>
                     <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">Udemy</p>
-                    <p class="text-gray-500 dark:text-slate-400 text-xs mt-1">Oct 2025</p>
+                    <p class="text-gray-500 dark:text-slate-400 text-xs mt-1 mb-4">Aug 2025</p>
+                    <div class="mt-auto pt-4 border-t border-gray-100 dark:border-white/10">
+                        <a href="https://www.udemy.com/certificate/UC-f56fd515-d62f-4c32-8082-cdabd5f2ec7c/" target="_blank" class="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors z-10 relative">
+                            <i class="fas fa-external-link-alt"></i> View Certificate
+                        </a>
+                    </div>
                 </div>
 
-                <div class="theme-card p-6 rounded-3xl" data-aos="fade-up" data-aos-delay="200">
+                <div class="theme-card p-6 rounded-3xl flex flex-col h-full" data-aos="fade-up" data-aos-delay="400" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                     <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
-                    <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">Build Generative AI Apps and Solutions with No-Code Tools</h3>
-                    <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">Infosys</p>
-                    <p class="text-gray-500 dark:text-slate-400 text-xs mt-1">Aug 2025</p>
-                </div>
-
-                <div class="theme-card p-6 rounded-3xl" data-aos="fade-up" data-aos-delay="300">
-                    <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
-                    <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">Computer Communications Specialization</h3>
-                    <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">Coursera</p>
-                    <p class="text-gray-500 dark:text-slate-400 text-xs mt-1">Apr 2025</p>
-                </div>
-
-                <div class="theme-card p-6 rounded-3xl" data-aos="fade-up" data-aos-delay="400">
-                    <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
-                    <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">Data Science Fundamentals</h3>
+                    <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">Master Generative AI & AI tools (ChatGPT & more)</h3>
                     <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">Udemy</p>
-                    <p class="text-gray-500 dark:text-slate-400 text-xs mt-1">Feb 2024</p>
+                    <p class="text-gray-500 dark:text-slate-400 text-xs mt-1 mb-4">Aug 2025</p>
+                    <div class="mt-auto pt-4 border-t border-gray-100 dark:border-white/10">
+                        <a href="https://springboard.udemy.com/certificate/UC-04b29906-d98b-4ce3-8350-b29372e6b4ce/" target="_blank" class="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors z-10 relative">
+                            <i class="fas fa-external-link-alt"></i> View Certificate
+                        </a>
+                    </div>
                 </div>
 
             </div>
         </section>
 
-        <section id="skills" class="scroll-mt-32">
+        <section id="skills" class="scroll-mt-32 max-w-6xl mx-auto section-spy">
             <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
                 <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Skills</h2>
@@ -346,76 +397,100 @@
             </div>
         </section>
 
-        <section id="projects" class="scroll-mt-32">
+        <section id="projects" class="scroll-mt-32 max-w-[1400px] mx-auto section-spy">
             <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
                 <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Projects</h2>
             </div>
             
-            <div class="grid grid-cols-1 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
                 
-                <div class="theme-card rounded-3xl p-8 md:p-10" data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                        <h3 class="font-bold text-2xl text-gray-900 dark:text-white">Customer Churn Intelligence & XAI System</h3>
-                        <span class="text-gray-500 dark:text-slate-400 text-sm mt-2 md:mt-0 whitespace-nowrap"><i class="far fa-calendar-alt mr-2"></i>Mar 2025</span>
-                    </div>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Python</span>
-                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">XGBoost</span>
-                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">NLP</span>
-                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">SHAP</span>
+                <div class="theme-card rounded-3xl p-6 md:p-8 hover:border-blue-300 flex flex-col h-full" data-aos="fade-up" data-aos-delay="100" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
+                    <div>
+                        <div class="flex flex-col justify-between mb-4">
+                            <h3 class="font-bold text-xl text-gray-900 dark:text-white mb-2">Customer Churn Intelligence & XAI System</h3>
+                            <span class="text-gray-500 dark:text-slate-400 text-sm font-medium"><i class="far fa-calendar-alt mr-2"></i>Mar 2025</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Python</span>
+                            <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">XGBoost</span>
+                            <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">NLP</span>
+                            <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">SHAP</span>
+                        </div>
+                        
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600 dark:text-slate-300 leading-relaxed text-sm md:text-base">
+                            <li>Developed an end-to-end predictive framework to forecast customer attrition with 85%+ accuracy by leveraging XGBoost on 7,000+ service records.</li>
+                            <li>Engineered a Multi-Modal pipeline by integrating NLP (TextBlob) to extract sentiment scores from raw customer feedback, improving model sensitivity to service dissatisfaction.</li>
+                            <li>Implemented Explainable AI (SHAP) to move beyond "black-box" modeling, providing granular transparency into feature impacts like Contract Type and Monthly Charges.</li>
+                            <li>Automated the full data lifecycle including cleaning, handling class imbalance via scale_pos_weight, and Joblib-based model serialization for production readiness.</li>
+                        </ul>
                     </div>
                     
-                    <ul class="list-disc pl-5 space-y-3 text-gray-600 dark:text-slate-300 leading-relaxed text-base">
-                        <li>Developed an end-to-end predictive framework to forecast customer attrition with 85%+ accuracy by leveraging XGBoost on 7,000+ service records.</li>
-                        <li>Engineered a Multi-Modal pipeline by integrating NLP (TextBlob) to extract sentiment scores from raw customer feedback, improving model sensitivity to service dissatisfaction.</li>
-                        <li>Implemented Explainable AI (SHAP) to move beyond "black-box" modeling, providing granular transparency into feature impacts like Contract Type and Monthly Charges.</li>
-                        <li>Automated the full data lifecycle including cleaning, handling class imbalance via scale_pos_weight, and Joblib-based model serialization for production readiness.</li>
-                    </ul>
+                    <div class="mt-8 pt-6 border-t border-gray-100 dark:border-white/10 mt-auto">
+                        <a href="https://github.com/ishan0012" target="_blank" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors relative z-10">
+                            <i class="fab fa-github text-lg"></i> View Source Code
+                        </a>
+                    </div>
                 </div>
 
-                <div class="theme-card rounded-3xl p-8 md:p-10" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                        <h3 class="font-bold text-2xl text-gray-900 dark:text-white">Credit Risk Assessment & Default Prediction</h3>
-                        <span class="text-gray-500 dark:text-slate-400 text-sm mt-2 md:mt-0 whitespace-nowrap"><i class="far fa-calendar-alt mr-2"></i>Apr 2025</span>
-                    </div>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Python</span>
-                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Scikit-Learn</span>
-                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Random Forest</span>
+                <div class="theme-card rounded-3xl p-6 md:p-8 hover:border-blue-300 flex flex-col h-full" data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
+                    <div>
+                        <div class="flex flex-col justify-between mb-4">
+                            <h3 class="font-bold text-xl text-gray-900 dark:text-white mb-2">Credit Risk Assessment & Default Prediction</h3>
+                            <span class="text-gray-500 dark:text-slate-400 text-sm font-medium"><i class="far fa-calendar-alt mr-2"></i>Apr 2025</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Python</span>
+                            <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Scikit-Learn</span>
+                            <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Random Forest</span>
+                        </div>
+                        
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600 dark:text-slate-300 leading-relaxed text-sm md:text-base">
+                            <li>Developed a robust credit scoring model to predict the probability of loan default for 5,000+ applicants, utilizing Random Forest to achieve high ROC-AUC precision.</li>
+                            <li>Engineered critical financial features, such as Debt-to-Income (DTI) ratios, to better quantify applicant repayment capacity and improve model sensitivity.</li>
+                            <li>Addressed Class Imbalance by implementing balanced class weighting techniques, ensuring the effective identification of high-risk minority cases in a skewed dataset.</li>
+                            <li>Visualized key risk drivers through Feature Importance ranking, providing actionable insights for automated lending decision-making and risk mitigation.</li>
+                        </ul>
                     </div>
                     
-                    <ul class="list-disc pl-5 space-y-3 text-gray-600 dark:text-slate-300 leading-relaxed text-base">
-                        <li>Developed a robust credit scoring model to predict the probability of loan default for 5,000+ applicants, utilizing Random Forest to achieve high ROC-AUC precision.</li>
-                        <li>Engineered critical financial features, such as Debt-to-Income (DTI) ratios, to better quantify applicant repayment capacity and improve model sensitivity.</li>
-                        <li>Addressed Class Imbalance by implementing balanced class weighting techniques, ensuring the effective identification of high-risk minority cases in a skewed dataset.</li>
-                        <li>Visualized key risk drivers through Feature Importance ranking, providing actionable insights for automated lending decision-making and risk mitigation.</li>
-                    </ul>
+                    <div class="mt-8 pt-6 border-t border-gray-100 dark:border-white/10 mt-auto">
+                        <a href="https://github.com/ishan0012" target="_blank" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors relative z-10">
+                            <i class="fab fa-github text-lg"></i> View Source Code
+                        </a>
+                    </div>
                 </div>
 
-                <div class="theme-card rounded-3xl p-8 md:p-10" data-aos="fade-up" data-aos-delay="300">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                        <h3 class="font-bold text-2xl text-gray-900 dark:text-white">Automotive Intelligence & Predictive Analytics</h3>
-                        <span class="text-gray-500 dark:text-slate-400 text-sm mt-2 md:mt-0 whitespace-nowrap"><i class="far fa-calendar-alt mr-2"></i>Mar 2026</span>
+                <div class="theme-card rounded-3xl p-6 md:p-8 hover:border-blue-300 flex flex-col h-full" data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
+                    <div>
+                        <div class="flex flex-col justify-between mb-4">
+                            <h3 class="font-bold text-xl text-gray-900 dark:text-white mb-2">Automotive Intelligence & Predictive Analytics</h3>
+                            <span class="text-gray-500 dark:text-slate-400 text-sm font-medium"><i class="far fa-calendar-alt mr-2"></i>Mar 2026</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Python</span>
+                            <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Scikit-Learn</span>
+                            <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Plotly</span>
+                        </div>
+                        
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600 dark:text-slate-300 leading-relaxed text-sm md:text-base">
+                            <li>Developed a predictive regression model to estimate vehicle fuel efficiency (MPG) based on engine displacement and weight, achieving significant R-squared accuracy.</li>
+                            <li>Engineered interactive multi-dimensional visualizations using Plotly to track efficiency trends across global automotive markets (USA, Japan, and Europe).</li>
+                            <li>Quantified the impact of vehicle weight on environmental footprints through advanced statistical correlation mapping and Seaborn violin plots.</li>
+                            <li>Automated a data cleaning and feature selection pipeline for 390+ unique vehicle models, ensuring high data integrity for machine learning training.</li>
+                        </ul>
                     </div>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Python</span>
-                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Scikit-Learn</span>
-                        <span class="text-xs text-blue-700 dark:text-cyan-400 font-semibold uppercase tracking-wider border border-blue-200 dark:border-cyan-500/30 px-3 py-1 rounded-md bg-blue-50 dark:bg-cyan-500/10">Plotly</span>
+
+                    <div class="mt-8 pt-6 border-t border-gray-100 dark:border-white/10 mt-auto">
+                        <a href="https://github.com/ishan0012" target="_blank" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors relative z-10">
+                            <i class="fab fa-github text-lg"></i> View Source Code
+                        </a>
                     </div>
-                    
-                    <ul class="list-disc pl-5 space-y-3 text-gray-600 dark:text-slate-300 leading-relaxed text-base">
-                        <li>Developed a predictive regression model to estimate vehicle fuel efficiency (MPG) based on engine displacement and weight, achieving significant R-squared accuracy.</li>
-                        <li>Engineered interactive multi-dimensional visualizations using Plotly to track efficiency trends across global automotive markets (USA, Japan, and Europe).</li>
-                        <li>Quantified the impact of vehicle weight on environmental footprints through advanced statistical correlation mapping and Seaborn violin plots.</li>
-                        <li>Automated a data cleaning and feature selection pipeline for 390+ unique vehicle models, ensuring high data integrity for machine learning training.</li>
-                    </ul>
                 </div>
 
             </div>
         </section>
 
-        <section id="contact" class="scroll-mt-32 pb-10">
+        <section id="contact" class="scroll-mt-32 pb-10 max-w-6xl mx-auto section-spy">
             <div class="theme-card p-12 md:p-20 rounded-[3rem] text-center relative overflow-hidden" data-aos="zoom-in" data-aos-duration="1000">
                 <div class="absolute top-0 right-0 w-64 h-64 bg-blue-100 dark:bg-cyan-500/20 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
                 <div class="absolute bottom-0 left-0 w-64 h-64 bg-gray-100 dark:bg-blue-500/20 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3"></div>
@@ -461,6 +536,7 @@
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     
     <script>
         // 1. Initialize AOS Animations
@@ -479,24 +555,20 @@
         const themeIcon = document.getElementById('theme-icon');
         const htmlElement = document.documentElement;
 
-        // Check for saved user preference, if any, on load
         if (localStorage.getItem('color-theme') === 'light') {
             htmlElement.classList.remove('dark');
             themeIcon.classList.replace('fa-sun', 'fa-moon');
         } else {
-            // Default to dark
             htmlElement.classList.add('dark');
             themeIcon.classList.replace('fa-moon', 'fa-sun');
         }
 
         themeToggleBtn.addEventListener('click', function() {
             if (htmlElement.classList.contains('dark')) {
-                // Switch to Light Mode
                 htmlElement.classList.remove('dark');
                 localStorage.setItem('color-theme', 'light');
                 themeIcon.classList.replace('fa-sun', 'fa-moon');
             } else {
-                // Switch to Dark Mode
                 htmlElement.classList.add('dark');
                 localStorage.setItem('color-theme', 'dark');
                 themeIcon.classList.replace('fa-moon', 'fa-sun');
@@ -525,7 +597,7 @@
 
             if (!isDeleting && charIndex === currentWord.length) {
                 typingSpeed = 2000;
-                isDeleting = true;
+                isDeleting = true; 
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 textIndex = (textIndex + 1) % textArray.length;
@@ -535,7 +607,7 @@
         }
         setTimeout(typeEffect, 1000);
 
-        // 5. Copy Email Logic (Theme Aware)
+        // 5. Copy Email Logic 
         const emailBox = document.getElementById("email-box");
         const emailText = document.getElementById("email-text");
         const originalText = "ishanarora0012@gmail.com"; 
@@ -544,7 +616,6 @@
             navigator.clipboard.writeText(originalText);
             emailText.innerHTML = "Copied! <i class='fas fa-check text-green-500 dark:text-green-400 ml-2'></i>";
             
-            // Adjust flash color based on theme
             if(document.documentElement.classList.contains('dark')){
                 emailBox.style.borderColor = "#22d3ee";
             } else {
@@ -555,8 +626,38 @@
             setTimeout(() => {
                 emailText.innerText = originalText + "";
                 emailBox.style.borderColor = "";
-                emailBox.style.backgroundColor = ""; // Reset
+                emailBox.style.backgroundColor = ""; 
             }, 2000);
+        });
+
+        // 6. Scroll Progress Bar Logic
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('scroll-progress').style.width = scrollPercent + '%';
+        });
+
+        // 7. Scroll Spy (Active Navigation) Logic
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
         });
     </script>
 </body>
