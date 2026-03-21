@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ishan Arora | Portfolio</title>
     
+    <meta property="og:title" content="Ishan Arora | Software Engineer & Data Scientist">
+    <meta property="og:description" content="Computer Science student specializing in predictive analytics, machine learning, and solving complex problems with efficient algorithms.">
+    <meta property="og:image" content="1000147806.jpg">
+    <meta property="og:url" content="https://ishan0012.github.io/Portfolio-CV-/">
+    <meta property="og:type" content="website">
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
-    
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <script>
@@ -43,98 +46,58 @@
         
         .dark body { background-color: #020617; }
 
-        .bg-orb {
-            position: absolute; width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%);
-            border-radius: 50%; filter: blur(60px);
-            animation: floatOrb 15s ease-in-out infinite alternate;
-            z-index: -1; display: none;
+        /* Custom Cursor CSS (Only applies to non-touch devices) */
+        @media (pointer: fine) {
+            body, a, button, input { cursor: none !important; }
+            .cursor-dot {
+                position: fixed; top: 0; left: 0; width: 8px; height: 8px;
+                background-color: #22d3ee; border-radius: 50%;
+                transform: translate(-50%, -50%); z-index: 9999; pointer-events: none;
+            }
+            .cursor-outline {
+                position: fixed; top: 0; left: 0; width: 40px; height: 40px;
+                border: 2px solid rgba(34, 211, 238, 0.5); border-radius: 50%;
+                transform: translate(-50%, -50%); z-index: 9998; pointer-events: none;
+                transition: width 0.2s, height 0.2s, background-color 0.2s;
+            }
+            .cursor-hover {
+                width: 60px; height: 60px;
+                background-color: rgba(34, 211, 238, 0.1);
+                border-color: rgba(34, 211, 238, 0.8);
+            }
         }
-        .bg-orb-2 {
-            position: absolute; right: -100px; top: 40%; width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%);
-            border-radius: 50%; filter: blur(60px);
-            animation: floatOrb 12s ease-in-out infinite alternate-reverse;
-            z-index: -1; display: none;
-        }
-        .dark .bg-orb, .dark .bg-orb-2 { display: block; }
 
-        .light-wash {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
-            background: linear-gradient(180deg, rgba(239,246,255,0.7) 0%, rgba(249,250,251,1) 100%);
-            z-index: -2; display: block;
-        }
-        .dark .light-wash { display: none; }
-
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(100px, 50px) scale(1.1); }
-        }
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
 
         .theme-card {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
+            background: #ffffff; border: 1px solid #e5e7eb; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: all 0.3s ease; transform-style: preserve-3d;
         }
-        .theme-card:hover {
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.08);
-            border-color: #93c5fd;
-        }
+        .theme-card:hover { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.08); border-color: #93c5fd; }
         
         .dark .theme-card {
-            background: rgba(30, 41, 59, 0.4); 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
-        .dark .theme-card:hover {
-            border-color: rgba(34,211,238,0.3);
-            box-shadow: 0 10px 30px rgba(34,211,238,0.05);
-        }
+        .dark .theme-card:hover { border-color: rgba(34,211,238,0.3); box-shadow: 0 10px 30px rgba(34,211,238,0.05); }
 
-        /* Tech Stack Card Styling */
-        .tech-card {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-bottom-width: 4px;
-            transition: all 0.3s ease;
-        }
-        .dark .tech-card {
-            background: rgba(21, 30, 46, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-bottom-width: 4px;
-        }
-        .tech-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-        }
+        .tech-card { background: #ffffff; border: 1px solid #e5e7eb; border-bottom-width: 4px; transition: all 0.3s ease; }
+        .dark .tech-card { background: rgba(21, 30, 46, 0.7); border: 1px solid rgba(255, 255, 255, 0.03); border-bottom-width: 4px; }
+        .tech-card:hover { transform: translateY(-6px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
 
         .nav-link { position: relative; }
-        .nav-link::after {
-            content: ""; position: absolute; width: 0%; height: 2px;
-            left: 0; bottom: -4px; background: #1a73e8;
-            transition: 0.3s ease-in-out;
-        }
+        .nav-link::after { content: ""; position: absolute; width: 0%; height: 2px; left: 0; bottom: -4px; background: #1a73e8; transition: 0.3s ease-in-out; }
         .dark .nav-link::after { background: #22d3ee; }
         .nav-link:hover::after, .nav-link.active::after { width: 100%; }
         .nav-link.active { color: #1a73e8; font-weight: 600; }
         .dark .nav-link.active { color: #22d3ee; }
 
-        .typing-cursor::after {
-            content: '|'; animation: blink 1s step-end infinite; color: #1a73e8;
-        }
+        .typing-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #1a73e8; }
         .dark .typing-cursor::after { color: #22d3ee; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        @keyframes floatPortrait {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-20px); }
-        }
-        .animate-float-portrait {
-            animation: floatPortrait 6s ease-in-out infinite alternate;
-        }
+        @keyframes floatPortrait { 0% { transform: translateY(0px); } 100% { transform: translateY(-20px); } }
+        .animate-float-portrait { animation: floatPortrait 6s ease-in-out infinite alternate; }
 
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f8f9fa; }
@@ -144,25 +107,34 @@
         ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
         .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-        /* ByteBuddy Bot Pulse */
         @keyframes pulse-ring {
             0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(124, 58, 237, 0); }
             100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
         }
         .bot-pulse { animation: pulse-ring 2s infinite; }
+        
+        .typing-dot { animation: typingBounce 1.4s infinite ease-in-out both; }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
     </style>
 </head>
 
-<body class="relative antialiased text-gray-800 dark:text-slate-300 transition-colors duration-300" id="top">
+<body class="relative antialiased text-gray-800 dark:text-slate-300 transition-colors duration-300 overflow-x-hidden" id="top">
+
+    <div id="splash-screen" class="fixed inset-0 z-[10000] bg-slate-950 flex flex-col items-center justify-center transition-transform duration-700 ease-in-out">
+        <div class="text-3xl md:text-5xl font-mono text-cyan-400 font-bold flex items-center">
+            <span id="splash-text"></span><span class="w-4 h-8 md:h-12 bg-cyan-400 animate-[blink_1s_infinite] ml-2"></span>
+        </div>
+    </div>
+
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <div id="particles-js"></div>
 
     <div id="scroll-progress" class="fixed top-0 left-0 h-[3px] bg-blue-600 dark:bg-cyan-400 z-50 transition-all duration-75 w-0 shadow-[0_0_10px_rgba(37,99,235,0.5)] dark:shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
-
-    <div class="light-wash"></div>
-    <div class="bg-orb top-[-10%] left-[-10%]"></div>
-    <div class="bg-orb-2"></div>
-
-    <div id="glow" class="fixed w-40 h-40 rounded-full pointer-events-none transform -translate-x-1/2 -translate-y-1/2 z-50 transition-opacity duration-300 hidden md:block dark:!bg-[radial-gradient(circle,rgba(34,211,238,0.15)_0%,transparent_70%)]" style="background: radial-gradient(circle, rgba(26,115,232,0.08) 0%, transparent 70%);"></div>
 
     <nav class="fixed w-full z-40 top-0 transition-all duration-300 px-6 py-4 md:px-12 flex justify-between items-center bg-white/90 border-b border-gray-200 dark:bg-slate-900/60 dark:backdrop-blur-md dark:border-white/5 mt-[3px]">
         <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight hover:opacity-80 transition-opacity">
@@ -179,13 +151,13 @@
                 <li><a href="#projects" class="nav-link hover:text-gray-900 dark:hover:text-white transition">Projects</a></li>
             </ul>
 
-            <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-cyan-400 hover:bg-gray-200 dark:hover:bg-slate-700 transition duration-300 flex items-center justify-center w-10 h-10">
+            <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-cyan-400 hover:bg-gray-200 dark:hover:bg-slate-700 transition duration-300 flex items-center justify-center w-10 h-10 hover-target">
                 <i id="theme-icon" class="fas fa-sun"></i>
             </button>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-6 pt-40 pb-16 space-y-40">
+    <main class="max-w-7xl mx-auto px-6 pt-40 pb-16 space-y-40 relative z-10">
 
         <section id="hero" class="flex flex-col-reverse md:flex-row items-center justify-between gap-12 scroll-mt-32" data-aos="fade-up" data-aos-duration="1000">
             <div class="max-w-xl text-center md:text-left z-10">
@@ -195,20 +167,20 @@
                 <p class="text-gray-600 dark:text-slate-400 leading-relaxed mb-8 text-lg">A Computer Science & Engineering student specializing in predictive analytics, machine learning, and solving complex problems with efficient algorithms.</p>
                 
                 <div class="flex flex-wrap justify-center md:justify-start gap-5 mb-8">
-                    <a href="mailto:ishanarora0012@gmail.com" class="text-gray-400 hover:text-blue-600 dark:text-slate-500 dark:hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fas fa-envelope"></i></a>
-                    <a href="tel:+919596835372" class="text-gray-400 hover:text-blue-600 dark:text-slate-500 dark:hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fas fa-phone"></i></a>
-                    <a href="https://www.linkedin.com/in/ishan0012/" target="_blank" class="text-gray-400 hover:text-[#0A66C2] dark:text-slate-500 dark:hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/ishan0012" target="_blank" class="text-gray-400 hover:text-gray-900 dark:text-slate-500 dark:hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fab fa-github"></i></a>
+                    <a href="mailto:ishanarora0012@gmail.com" class="hover-target text-gray-400 hover:text-blue-600 dark:text-slate-500 dark:hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fas fa-envelope"></i></a>
+                    <a href="tel:+919596835372" class="hover-target text-gray-400 hover:text-blue-600 dark:text-slate-500 dark:hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fas fa-phone"></i></a>
+                    <a href="https://www.linkedin.com/in/ishan0012/" target="_blank" class="hover-target text-gray-400 hover:text-[#0A66C2] dark:text-slate-500 dark:hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/ishan0012" target="_blank" class="hover-target text-gray-400 hover:text-gray-900 dark:text-slate-500 dark:hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fab fa-github"></i></a>
                 </div>
 
                 <div class="flex flex-wrap justify-center md:justify-start gap-3">
-                    <button onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})" class="bg-blue-600 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-700 dark:bg-gradient-to-r dark:from-cyan-500 dark:to-blue-600 dark:hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:-translate-y-1 transition-all duration-300 text-sm md:text-base">Explore Projects</button>
+                    <button onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})" class="hover-target bg-blue-600 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-700 dark:bg-gradient-to-r dark:from-cyan-500 dark:to-blue-600 dark:hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:-translate-y-1 transition-all duration-300 text-sm md:text-base">Explore Projects</button>
                     
-                    <a id="view-cv-btn" href="ishancv.pdf" target="_blank" class="bg-white text-gray-700 border border-gray-200 px-6 py-3 rounded-full font-medium hover:text-purple-600 hover:border-purple-300 dark:bg-slate-800/40 dark:text-white dark:border-white/10 dark:hover:border-purple-500/50 dark:hover:text-purple-400 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 shadow-sm text-sm md:text-base">
+                    <a id="view-cv-btn" href="ishancv.pdf" target="_blank" class="hover-target bg-white text-gray-700 border border-gray-200 px-6 py-3 rounded-full font-medium hover:text-purple-600 hover:border-purple-300 dark:bg-slate-800/40 dark:text-white dark:border-white/10 dark:hover:border-purple-500/50 dark:hover:text-purple-400 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 shadow-sm text-sm md:text-base">
                         <i class="fas fa-eye"></i> View CV
                     </a>
                     
-                    <a id="download-cv-btn" href="ishancv.pdf" download class="bg-white text-gray-700 border border-gray-200 px-6 py-3 rounded-full font-medium hover:text-blue-600 hover:border-blue-300 dark:bg-slate-800/40 dark:text-white dark:border-white/10 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 shadow-sm text-sm md:text-base">
+                    <a id="download-cv-btn" href="ishancv.pdf" download class="hover-target bg-white text-gray-700 border border-gray-200 px-6 py-3 rounded-full font-medium hover:text-blue-600 hover:border-blue-300 dark:bg-slate-800/40 dark:text-white dark:border-white/10 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 shadow-sm text-sm md:text-base">
                         <i class="fas fa-download"></i> Download CV
                     </a>
                 </div>
@@ -225,7 +197,7 @@
                 <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-white">About Me</h2>
             </div>
-            <div class="theme-card p-8 md:p-12 rounded-3xl relative overflow-hidden group" data-aos="fade-up">
+            <div class="theme-card hover-target p-8 md:p-12 rounded-3xl relative overflow-hidden group" data-aos="fade-up">
                 <div class="absolute top-0 right-0 w-40 h-40 bg-blue-50 dark:bg-cyan-500/10 rounded-full blur-3xl group-hover:bg-blue-100 dark:group-hover:bg-cyan-500/20 transition duration-500"></div>
                 
                 <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Turning Data into Intelligence</h3>
@@ -254,7 +226,7 @@
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Education</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="theme-card p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="100">
+                <div class="theme-card hover-target p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="100">
                     <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-cyan-500/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 mb-6 border border-blue-100 dark:border-transparent">
                         <i class="fas fa-graduation-cap fa-xl"></i>
                     </div>
@@ -266,7 +238,7 @@
                     </div>
                 </div>
                 
-                <div class="theme-card p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="200">
+                <div class="theme-card hover-target p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="200">
                     <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-cyan-500/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 mb-6 border border-blue-100 dark:border-transparent">
                         <i class="fas fa-school fa-xl"></i>
                     </div>
@@ -278,7 +250,7 @@
                     </div>
                 </div>
 
-                <div class="theme-card p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="300">
+                <div class="theme-card hover-target p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="300">
                     <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-cyan-500/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 mb-6 border border-blue-100 dark:border-transparent">
                         <i class="fas fa-book-open fa-xl"></i>
                     </div>
@@ -298,7 +270,7 @@
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Technical Training</h2>
             </div>
             
-            <div class="theme-card p-8 md:p-10 rounded-3xl !border-l-4 !border-l-blue-600 dark:!border-l-cyan-500" data-aos="fade-up">
+            <div class="theme-card hover-target p-8 md:p-10 rounded-3xl !border-l-4 !border-l-blue-600 dark:!border-l-cyan-500" data-aos="fade-up">
                 <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
                     <h3 class="font-bold text-2xl text-gray-900 dark:text-white">Data Structures and Algorithms with C++</h3>
                     <span class="text-gray-600 dark:text-slate-400 text-sm mt-2 md:mt-0 whitespace-nowrap bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-transparent px-4 py-2 rounded-full"><i class="far fa-calendar-alt mr-2 text-blue-600 dark:text-cyan-400"></i>Jun 2025 – Jul 2025</span>
@@ -321,7 +293,7 @@
                 </ul>
 
                 <div class="mt-8 pt-6 border-t border-gray-100 dark:border-white/10 mt-auto">
-                    <a href="Screenshot (4).png" target="_blank" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors">
+                    <a href="Screenshot (4).png" target="_blank" class="hover-target inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors">
                         <i class="fas fa-certificate text-lg"></i> View Certificate
                     </a>
                 </div>
@@ -335,49 +307,49 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
-                <div class="theme-card p-6 rounded-3xl flex flex-col h-full" data-aos="fade-up" data-aos-delay="100" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                <div class="theme-card hover-target p-6 rounded-3xl flex flex-col h-full" data-aos="fade-up" data-aos-delay="100" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                     <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
                     <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">The Bits and Bytes of Computer Networking</h3>
                     <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">Google</p>
                     <p class="text-gray-500 dark:text-slate-400 text-xs mt-1 mb-4">Sep 2024</p>
                     <div class="mt-auto pt-4 border-t border-gray-100 dark:border-white/10">
-                        <a href="https://coursera.org/share/c700bff28aa410df77edc2875241aa4e" target="_blank" class="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors z-10 relative">
+                        <a href="https://coursera.org/share/c700bff28aa410df77edc2875241aa4e" target="_blank" class="hover-target inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors z-10 relative">
                             <i class="fas fa-external-link-alt"></i> View Certificate
                         </a>
                     </div>
                 </div>
 
-                <div class="theme-card p-6 rounded-3xl flex flex-col h-full" data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                <div class="theme-card hover-target p-6 rounded-3xl flex flex-col h-full" data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                     <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
                     <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">Computer Communications</h3>
                     <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">University of Colorado System</p>
                     <p class="text-gray-500 dark:text-slate-400 text-xs mt-1 mb-4">Nov 2024</p>
                     <div class="mt-auto pt-4 border-t border-gray-100 dark:border-white/10">
-                        <a href="https://coursera.org/share/43f54083f33fbc70095df7fd59aa1a86" target="_blank" class="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors z-10 relative">
+                        <a href="https://coursera.org/share/43f54083f33fbc70095df7fd59aa1a86" target="_blank" class="hover-target inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors z-10 relative">
                             <i class="fas fa-external-link-alt"></i> View Certificate
                         </a>
                     </div>
                 </div>
 
-                <div class="theme-card p-6 rounded-3xl flex flex-col h-full" data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                <div class="theme-card hover-target p-6 rounded-3xl flex flex-col h-full" data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                     <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
                     <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">Build Generative AI Apps and Solutions with No-Code</h3>
                     <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">Udemy</p>
                     <p class="text-gray-500 dark:text-slate-400 text-xs mt-1 mb-4">Aug 2025</p>
                     <div class="mt-auto pt-4 border-t border-gray-100 dark:border-white/10">
-                        <a href="https://www.udemy.com/certificate/UC-f56fd515-d62f-4c32-8082-cdabd5f2ec7c/" target="_blank" class="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors z-10 relative">
+                        <a href="https://www.udemy.com/certificate/UC-f56fd515-d62f-4c32-8082-cdabd5f2ec7c/" target="_blank" class="hover-target inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors z-10 relative">
                             <i class="fas fa-external-link-alt"></i> View Certificate
                         </a>
                     </div>
                 </div>
 
-                <div class="theme-card p-6 rounded-3xl flex flex-col h-full" data-aos="fade-up" data-aos-delay="400" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                <div class="theme-card hover-target p-6 rounded-3xl flex flex-col h-full" data-aos="fade-up" data-aos-delay="400" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                     <div class="text-blue-600 dark:text-cyan-400 mb-3"><i class="fas fa-certificate fa-lg"></i></div>
                     <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-3 leading-relaxed">Master Generative AI & AI tools (ChatGPT & more)</h3>
                     <p class="text-blue-600 dark:text-cyan-400 text-xs font-semibold uppercase">Udemy</p>
                     <p class="text-gray-500 dark:text-slate-400 text-xs mt-1 mb-4">Aug 2025</p>
                     <div class="mt-auto pt-4 border-t border-gray-100 dark:border-white/10">
-                        <a href="https://springboard.udemy.com/certificate/UC-04b29906-d98b-4ce3-8350-b29372e6b4ce/" target="_blank" class="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors z-10 relative">
+                        <a href="https://springboard.udemy.com/certificate/UC-04b29906-d98b-4ce3-8350-b29372e6b4ce/" target="_blank" class="hover-target inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors z-10 relative">
                             <i class="fas fa-external-link-alt"></i> View Certificate
                         </a>
                     </div>
@@ -394,7 +366,7 @@
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" data-aos="fade-up">
                 
-                <div class="theme-card p-6 md:p-8 rounded-3xl h-full">
+                <div class="theme-card hover-target p-6 md:p-8 rounded-3xl h-full">
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
                         <div class="p-2 bg-blue-50 border border-blue-100 dark:border-transparent dark:bg-cyan-500/10 rounded-lg"><i class="fas fa-code text-blue-600 dark:text-cyan-400"></i></div> 
                         Languages & Tools/Platforms
@@ -460,7 +432,7 @@
                     </div>
                 </div>
 
-                <div class="theme-card p-6 md:p-8 rounded-3xl h-full flex flex-col">
+                <div class="theme-card hover-target p-6 md:p-8 rounded-3xl h-full flex flex-col">
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
                         <div class="p-2 bg-blue-50 border border-blue-100 dark:border-transparent dark:bg-cyan-500/10 rounded-lg"><i class="fas fa-users text-blue-600 dark:text-cyan-400"></i></div> 
                         Soft Skills
@@ -496,7 +468,7 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                <a href="https://leetcode.com/u/95HdC1rUGz/" target="_blank" class="theme-card p-6 rounded-3xl flex items-center gap-6 group hover:-translate-y-2 transition-transform" data-aos="fade-up" data-aos-delay="100" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
+                <a href="https://leetcode.com/u/95HdC1rUGz/" target="_blank" class="theme-card hover-target p-6 rounded-3xl flex items-center gap-6 group hover:-translate-y-2 transition-transform" data-aos="fade-up" data-aos-delay="100" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
                     <div class="w-16 h-16 rounded-2xl bg-orange-50 dark:bg-orange-500/10 flex items-center justify-center text-orange-500 group-hover:scale-110 transition-transform duration-300 shadow-inner">
                         <i class="fas fa-code text-2xl"></i>
                     </div>
@@ -507,7 +479,7 @@
                     </div>
                 </a>
 
-                <a href="https://github.com/ishan0012" target="_blank" class="theme-card p-6 rounded-3xl flex items-center gap-6 group hover:-translate-y-2 transition-transform" data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
+                <a href="https://github.com/ishan0012" target="_blank" class="theme-card hover-target p-6 rounded-3xl flex items-center gap-6 group hover:-translate-y-2 transition-transform" data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
                     <div class="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-800 dark:text-white group-hover:scale-110 transition-transform duration-300 shadow-inner">
                         <i class="fab fa-github text-3xl"></i>
                     </div>
@@ -528,7 +500,7 @@
             
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
                 
-                <div class="theme-card rounded-3xl p-6 md:p-8 hover:border-blue-300 flex flex-col h-full" data-aos="fade-up" data-aos-delay="100" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
+                <div class="theme-card hover-target rounded-3xl p-6 md:p-8 hover:border-blue-300 flex flex-col h-full" data-aos="fade-up" data-aos-delay="100" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
                     <div>
                         <div class="flex flex-col justify-between mb-4">
                             <h3 class="font-bold text-xl text-gray-900 dark:text-white mb-2">Customer Churn Intelligence & XAI System</h3>
@@ -550,13 +522,13 @@
                     </div>
                     
                     <div class="mt-8 pt-6 border-t border-gray-100 dark:border-white/10 mt-auto">
-                        <a href="https://github.com/ishan0012" target="_blank" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors relative z-10">
+                        <a href="https://github.com/ishan0012" target="_blank" class="hover-target inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors relative z-10">
                             <i class="fab fa-github text-lg"></i> View Source Code
                         </a>
                     </div>
                 </div>
 
-                <div class="theme-card rounded-3xl p-6 md:p-8 hover:border-blue-300 flex flex-col h-full" data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
+                <div class="theme-card hover-target rounded-3xl p-6 md:p-8 hover:border-blue-300 flex flex-col h-full" data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
                     <div>
                         <div class="flex flex-col justify-between mb-4">
                             <h3 class="font-bold text-xl text-gray-900 dark:text-white mb-2">Credit Risk Assessment & Default Prediction</h3>
@@ -577,13 +549,13 @@
                     </div>
                     
                     <div class="mt-8 pt-6 border-t border-gray-100 dark:border-white/10 mt-auto">
-                        <a href="https://github.com/ishan0012" target="_blank" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors relative z-10">
+                        <a href="https://github.com/ishan0012" target="_blank" class="hover-target inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors relative z-10">
                             <i class="fab fa-github text-lg"></i> View Source Code
                         </a>
                     </div>
                 </div>
 
-                <div class="theme-card rounded-3xl p-6 md:p-8 hover:border-blue-300 flex flex-col h-full" data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
+                <div class="theme-card hover-target rounded-3xl p-6 md:p-8 hover:border-blue-300 flex flex-col h-full" data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
                     <div>
                         <div class="flex flex-col justify-between mb-4">
                             <h3 class="font-bold text-xl text-gray-900 dark:text-white mb-2">Automotive Intelligence & Predictive Analytics</h3>
@@ -604,7 +576,7 @@
                     </div>
 
                     <div class="mt-8 pt-6 border-t border-gray-100 dark:border-white/10 mt-auto">
-                        <a href="https://github.com/ishan0012" target="_blank" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors relative z-10">
+                        <a href="https://github.com/ishan0012" target="_blank" class="hover-target inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 transition-colors relative z-10">
                             <i class="fab fa-github text-lg"></i> View Source Code
                         </a>
                     </div>
@@ -614,7 +586,7 @@
         </section>
 
         <section id="contact" class="scroll-mt-32 pb-10 max-w-6xl mx-auto section-spy">
-            <div class="theme-card p-12 md:p-20 rounded-[3rem] text-center relative overflow-hidden" data-aos="zoom-in" data-aos-duration="1000">
+            <div class="theme-card hover-target p-12 md:p-20 rounded-[3rem] text-center relative overflow-hidden" data-aos="zoom-in" data-aos-duration="1000">
                 <div class="absolute top-0 right-0 w-64 h-64 bg-blue-100 dark:bg-cyan-500/20 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
                 <div class="absolute bottom-0 left-0 w-64 h-64 bg-gray-100 dark:bg-blue-500/20 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3"></div>
                 
@@ -624,7 +596,7 @@
                 <div class="flex flex-col items-center gap-8 relative z-10">
                     
                     <div class="flex flex-col md:flex-row gap-6">
-                        <div class="inline-flex bg-white dark:bg-slate-900/80 border border-gray-200 dark:border-white/10 p-4 rounded-2xl hover:border-blue-400 dark:hover:border-cyan-500/50 shadow-sm hover:shadow-md transition-all cursor-pointer group" id="email-box">
+                        <div class="hover-target inline-flex bg-white dark:bg-slate-900/80 border border-gray-200 dark:border-white/10 p-4 rounded-2xl hover:border-blue-400 dark:hover:border-cyan-500/50 shadow-sm hover:shadow-md transition-all cursor-pointer group" id="email-box">
                             <p class="text-lg font-medium text-gray-900 dark:text-white flex items-center gap-4">
                                 <span class="bg-blue-50 dark:bg-cyan-500/20 text-blue-600 dark:text-cyan-400 p-3 rounded-xl border border-blue-100 dark:border-transparent group-hover:bg-blue-600 group-hover:text-white dark:group-hover:scale-110 transition-all"><i class="fas fa-envelope"></i></span>
                                 <span id="email-text">ishanarora0012@gmail.com</span>
@@ -632,7 +604,7 @@
                             </p>
                         </div>
 
-                        <a href="tel:+919596835372" class="inline-flex bg-white dark:bg-slate-900/80 border border-gray-200 dark:border-white/10 p-4 rounded-2xl hover:border-blue-400 dark:hover:border-cyan-500/50 shadow-sm hover:shadow-md transition-all group">
+                        <a href="tel:+919596835372" class="hover-target inline-flex bg-white dark:bg-slate-900/80 border border-gray-200 dark:border-white/10 p-4 rounded-2xl hover:border-blue-400 dark:hover:border-cyan-500/50 shadow-sm hover:shadow-md transition-all group">
                             <p class="text-lg font-medium text-gray-900 dark:text-white flex items-center gap-4">
                                 <span class="bg-blue-50 dark:bg-cyan-500/20 text-blue-600 dark:text-cyan-400 p-3 rounded-xl border border-blue-100 dark:border-transparent group-hover:bg-blue-600 group-hover:text-white dark:group-hover:scale-110 transition-all"><i class="fas fa-phone"></i></span>
                                 <span>+91 9596835372</span>
@@ -641,10 +613,10 @@
                     </div>
 
                     <div class="flex gap-6 mt-2">
-                        <a href="https://www.linkedin.com/in/ishan0012/" target="_blank" class="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-gray-200 dark:border-white/10 px-6 py-3 rounded-xl text-gray-600 dark:text-slate-300 font-medium hover:text-blue-600 dark:hover:text-white hover:border-blue-300 dark:hover:border-cyan-500/50 hover:shadow-sm hover:-translate-y-1 transition-all">
+                        <a href="https://www.linkedin.com/in/ishan0012/" target="_blank" class="hover-target flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-gray-200 dark:border-white/10 px-6 py-3 rounded-xl text-gray-600 dark:text-slate-300 font-medium hover:text-blue-600 dark:hover:text-white hover:border-blue-300 dark:hover:border-cyan-500/50 hover:shadow-sm hover:-translate-y-1 transition-all">
                             <i class="fab fa-linkedin text-xl text-[#0A66C2]"></i> <span>LinkedIn</span>
                         </a>
-                        <a href="https://github.com/ishan0012" target="_blank" class="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-gray-200 dark:border-white/10 px-6 py-3 rounded-xl text-gray-600 dark:text-slate-300 font-medium hover:text-gray-900 dark:hover:text-white hover:border-gray-400 dark:hover:border-cyan-500/50 hover:shadow-sm hover:-translate-y-1 transition-all">
+                        <a href="https://github.com/ishan0012" target="_blank" class="hover-target flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-gray-200 dark:border-white/10 px-6 py-3 rounded-xl text-gray-600 dark:text-slate-300 font-medium hover:text-gray-900 dark:hover:text-white hover:border-gray-400 dark:hover:border-cyan-500/50 hover:shadow-sm hover:-translate-y-1 transition-all">
                             <i class="fab fa-github text-xl"></i> <span>GitHub</span>
                         </a>
                     </div>
@@ -654,8 +626,8 @@
 
     </main>
 
-    <footer class="py-8 text-center border-t border-gray-200 dark:border-white/5 bg-white dark:bg-transparent transition-colors">
-        <p class="text-gray-500 dark:text-slate-600 font-medium text-sm">© 2026 Ishan Arora. Designed with modern web standards.</p>
+    <footer class="py-8 text-center border-t border-gray-200 dark:border-white/5 bg-white dark:bg-transparent transition-colors z-10 relative">
+        <p class="text-gray-500 dark:text-slate-600 font-medium text-sm">© 2026 Ishan Arora. All Rights Reserved .</p>
     </footer>
 
     <div id="ai-bot-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
@@ -673,40 +645,112 @@
                 <div class="bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200 p-3 rounded-lg rounded-tl-none self-start max-w-[85%] leading-relaxed border border-indigo-200 dark:border-indigo-800">
                     Hi! I'm <b>ByteBuddy</b>, Ishan's AI Assistant. Ask me to <b>"download CV"</b>, <b>"view CV"</b>, <b>"go to projects"</b>, or switch to <b>"dark mode"</b>!
                 </div>
+                
+                <div id="typing-indicator" class="hidden bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200 p-3 rounded-lg rounded-tl-none self-start border border-indigo-200 dark:border-indigo-800 w-16">
+                    <div class="flex space-x-1 justify-center items-center h-4">
+                        <div class="w-2 h-2 bg-indigo-500 rounded-full typing-dot"></div>
+                        <div class="w-2 h-2 bg-indigo-500 rounded-full typing-dot"></div>
+                        <div class="w-2 h-2 bg-indigo-500 rounded-full typing-dot"></div>
+                    </div>
+                </div>
             </div>
             
             <div class="p-3 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-white/10 flex gap-2">
                 <input type="text" id="bot-input" class="flex-grow bg-gray-100 dark:bg-slate-700 text-gray-900 dark:text-white rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-purple-400 text-sm" placeholder="Type a command...">
-                <button id="mic-btn" class="bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-gray-300 w-10 h-10 rounded-lg hover:bg-gray-300 dark:hover:bg-slate-600 transition flex items-center justify-center" title="Click and allow microphone access">
+                <button id="mic-btn" class="hover-target bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-gray-300 w-10 h-10 rounded-lg hover:bg-gray-300 dark:hover:bg-slate-600 transition flex items-center justify-center" title="Click and allow microphone access">
                     <i class="fas fa-microphone"></i>
                 </button>
-                <button id="send-btn" class="bg-indigo-600 dark:bg-purple-500 text-white w-10 h-10 rounded-lg hover:bg-indigo-700 dark:hover:bg-purple-400 transition flex items-center justify-center">
+                <button id="send-btn" class="hover-target bg-indigo-600 dark:bg-purple-500 text-white w-10 h-10 rounded-lg hover:bg-indigo-700 dark:hover:bg-purple-400 transition flex items-center justify-center">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
         </div>
 
-        <button id="toggle-bot" class="bot-pulse w-14 h-14 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-[0_0_20px_rgba(124,58,237,0.4)] hover:scale-110 transition-transform flex items-center justify-center text-2xl">
+        <button id="toggle-bot" class="hover-target bot-pulse w-14 h-14 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-[0_0_20px_rgba(124,58,237,0.4)] hover:scale-110 transition-transform flex items-center justify-center text-2xl">
             <i class="fas fa-robot"></i>
         </button>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
     <script>
-        // 1. Initialize AOS Animations
+        // 1. Hacker Splash Screen Logic
+        const splash = document.getElementById('splash-screen');
+        const splashText = document.getElementById('splash-text');
+        const sText = "< Ishan Arora />";
+        let sIdx = 0;
+        
+        function typeSplash() {
+            if(sIdx < sText.length) {
+                splashText.textContent += sText.charAt(sIdx);
+                sIdx++;
+                setTimeout(typeSplash, 80);
+            } else {
+                setTimeout(() => {
+                    splash.style.transform = 'translateY(-100%)';
+                    setTimeout(() => splash.remove(), 700);
+                }, 600);
+            }
+        }
+        window.addEventListener('load', typeSplash);
+
+        // 2. Custom Magic Cursor Logic
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        
+        window.addEventListener('mousemove', (e) => {
+            if(cursorDot && cursorOutline) {
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+                
+                cursorOutline.animate({
+                    left: e.clientX + 'px',
+                    top: e.clientY + 'px'
+                }, { duration: 500, fill: "forwards" });
+            }
+        });
+
+        document.querySelectorAll('.hover-target, a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                if(cursorOutline) cursorOutline.classList.add('cursor-hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                if(cursorOutline) cursorOutline.classList.remove('cursor-hover');
+            });
+        });
+
+        // 3. Particles.js Background
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 40, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#06b6d4" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.3, "random": false },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#06b6d4", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "grab" },
+                    "onclick": { "enable": true, "mode": "push" },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": { "distance": 140, "line_linked": { "opacity": 0.8 } },
+                    "push": { "particles_nb": 3 }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // 4. Initialize AOS Animations
         AOS.init({ once: true, offset: 100 });
 
-        // 2. Mouse Glow Effect
-        const glow = document.getElementById("glow");
-        document.addEventListener("mousemove", (e) => {
-            glow.style.left = e.clientX + "px";
-            glow.style.top = e.clientY + "px";
-        });
-        window.addEventListener('touchstart', () => glow.style.display = 'none');
-
-        // 3. Theme Toggle Logic
+        // 5. Theme Toggle Logic
         const themeToggleBtn = document.getElementById('theme-toggle');
         const themeIcon = document.getElementById('theme-icon');
         const htmlElement = document.documentElement;
@@ -731,7 +775,7 @@
             }
         });
 
-        // 4. Typing Animation
+        // 6. Typing Role Animation
         const textArray = ["Data Scientist", "Machine Learning Enthusiast", "Problem Solver"];
         let textIndex = 0;
         let charIndex = 0;
@@ -763,7 +807,7 @@
         }
         setTimeout(typeEffect, 1000);
 
-        // 5. Copy Email Logic 
+        // 7. Copy Email Logic 
         const emailBox = document.getElementById("email-box");
         const emailText = document.getElementById("email-text");
         const originalText = "ishanarora0012@gmail.com"; 
@@ -786,7 +830,7 @@
             }, 2000);
         });
 
-        // 6. Scroll Progress Bar Logic
+        // 8. Scroll Progress Bar Logic
         window.addEventListener('scroll', () => {
             const scrollTop = window.scrollY;
             const docHeight = document.body.scrollHeight - window.innerHeight;
@@ -794,7 +838,7 @@
             document.getElementById('scroll-progress').style.width = scrollPercent + '%';
         });
 
-        // 7. Scroll Spy (Active Navigation) Logic
+        // 9. Scroll Spy (Active Navigation) Logic
         const sections = document.querySelectorAll('section.section-spy');
         const navLinks = document.querySelectorAll('.nav-link');
 
@@ -815,7 +859,7 @@
             });
         });
 
-        // 8. AI Assistant Logic
+        // 10. Advanced AI Assistant Logic (ByteBuddy)
         const botContainer = document.getElementById('ai-bot-container');
         const chatWindow = document.getElementById('ai-chat-window');
         const toggleBotBtn = document.getElementById('toggle-bot');
@@ -824,6 +868,7 @@
         const botInput = document.getElementById('bot-input');
         const sendBtn = document.getElementById('send-btn');
         const micBtn = document.getElementById('mic-btn');
+        const typingIndicator = document.getElementById('typing-indicator');
 
         toggleBotBtn.addEventListener('click', () => {
             chatWindow.classList.toggle('hidden');
@@ -839,7 +884,7 @@
             const msgDiv = document.createElement('div');
             msgDiv.className = `p-3 rounded-lg max-w-[85%] text-sm leading-relaxed ${isUser ? 'bg-indigo-600 dark:bg-purple-600 text-white self-end rounded-tr-none' : 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200 self-start rounded-tl-none border border-indigo-200 dark:border-indigo-800'}`;
             msgDiv.innerHTML = text;
-            chatMessages.appendChild(msgDiv);
+            chatMessages.insertBefore(msgDiv, typingIndicator);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
@@ -888,7 +933,15 @@
                 response = "Going back to the top!";
             }
 
-            setTimeout(() => addMessage(response, false), 600);
+            // Show Typing Indicator
+            typingIndicator.classList.remove('hidden');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Wait 1.2 seconds, then hide typing indicator and send response
+            setTimeout(() => {
+                typingIndicator.classList.add('hidden');
+                addMessage(response, false);
+            }, 1200);
         }
 
         function handleSend() {
