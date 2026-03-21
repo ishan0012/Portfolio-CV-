@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
     
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -75,7 +76,7 @@
             border: 1px solid #e5e7eb;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             transition: all 0.3s ease;
-            transform-style: preserve-3d; /* For 3D Tilt */
+            transform-style: preserve-3d;
         }
         .theme-card:hover {
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.08);
@@ -91,6 +92,23 @@
         .dark .theme-card:hover {
             border-color: rgba(34,211,238,0.3);
             box-shadow: 0 10px 30px rgba(34,211,238,0.05);
+        }
+
+        /* Tech Stack Card Styling */
+        .tech-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-bottom-width: 4px;
+            transition: all 0.3s ease;
+        }
+        .dark .tech-card {
+            background: rgba(21, 30, 46, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-bottom-width: 4px;
+        }
+        .tech-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
         }
 
         .nav-link { position: relative; }
@@ -110,7 +128,6 @@
         .dark .typing-cursor::after { color: #22d3ee; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* Floating effect for portrait */
         @keyframes floatPortrait {
             0% { transform: translateY(0px); }
             100% { transform: translateY(-20px); }
@@ -126,6 +143,14 @@
         .dark ::-webkit-scrollbar-thumb { background: #334155; }
         ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
         .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* ByteBuddy Bot Pulse */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(124, 58, 237, 0); }
+            100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+        }
+        .bot-pulse { animation: pulse-ring 2s infinite; }
     </style>
 </head>
 
@@ -152,7 +177,6 @@
                 <li><a href="#certificates" class="nav-link hover:text-gray-900 dark:hover:text-white transition">Certificates</a></li>
                 <li><a href="#skills" class="nav-link hover:text-gray-900 dark:hover:text-white transition">Skills</a></li>
                 <li><a href="#projects" class="nav-link hover:text-gray-900 dark:hover:text-white transition">Projects</a></li>
-                <li><a href="#contact" class="nav-link hover:text-gray-900 dark:hover:text-white transition">Contact</a></li>
             </ul>
 
             <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-cyan-400 hover:bg-gray-200 dark:hover:bg-slate-700 transition duration-300 flex items-center justify-center w-10 h-10">
@@ -177,9 +201,14 @@
                     <a href="https://github.com/ishan0012" target="_blank" class="text-gray-400 hover:text-gray-900 dark:text-slate-500 dark:hover:text-cyan-400 text-2xl transition-transform hover:-translate-y-1"><i class="fab fa-github"></i></a>
                 </div>
 
-                <div class="flex flex-wrap justify-center md:justify-start gap-4">
-                    <button onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})" class="bg-blue-600 text-white px-8 py-3 rounded-full font-medium hover:bg-blue-700 dark:bg-gradient-to-r dark:from-cyan-500 dark:to-blue-600 dark:hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:-translate-y-1 transition-all duration-300">Explore Projects</button>
-                    <a href="ishancv.pdf" download class="bg-white text-gray-700 border border-gray-200 px-8 py-3 rounded-full font-medium hover:text-blue-600 hover:border-blue-300 dark:bg-slate-800/40 dark:text-white dark:border-white/10 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 shadow-sm">
+                <div class="flex flex-wrap justify-center md:justify-start gap-3">
+                    <button onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})" class="bg-blue-600 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-700 dark:bg-gradient-to-r dark:from-cyan-500 dark:to-blue-600 dark:hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:-translate-y-1 transition-all duration-300 text-sm md:text-base">Explore Projects</button>
+                    
+                    <a id="view-cv-btn" href="ishancv.pdf" target="_blank" class="bg-white text-gray-700 border border-gray-200 px-6 py-3 rounded-full font-medium hover:text-purple-600 hover:border-purple-300 dark:bg-slate-800/40 dark:text-white dark:border-white/10 dark:hover:border-purple-500/50 dark:hover:text-purple-400 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 shadow-sm text-sm md:text-base">
+                        <i class="fas fa-eye"></i> View CV
+                    </a>
+                    
+                    <a id="download-cv-btn" href="ishancv.pdf" download class="bg-white text-gray-700 border border-gray-200 px-6 py-3 rounded-full font-medium hover:text-blue-600 hover:border-blue-300 dark:bg-slate-800/40 dark:text-white dark:border-white/10 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 shadow-sm text-sm md:text-base">
                         <i class="fas fa-download"></i> Download CV
                     </a>
                 </div>
@@ -364,37 +393,130 @@
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" data-aos="fade-up">
-                <div class="theme-card p-8 rounded-3xl">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                
+                <div class="theme-card p-6 md:p-8 rounded-3xl h-full">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
                         <div class="p-2 bg-blue-50 border border-blue-100 dark:border-transparent dark:bg-cyan-500/10 rounded-lg"><i class="fas fa-code text-blue-600 dark:text-cyan-400"></i></div> 
                         Languages & Tools/Platforms
                     </h3>
-                    <div class="flex flex-wrap gap-2 md:gap-3">
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">C++</span>
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Python</span>
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">C</span>
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Java</span>
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">HTML/CSS</span>
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Apex</span>
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">MySQL</span>
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Power BI</span>
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">MS Excel – Advanced</span>
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">AutoCAD</span>
+                    
+                    <div class="flex flex-wrap gap-3 justify-center">
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-orange-500">
+                            <i class="devicon-cplusplus-plain colored text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">C++ / DSA</span>
+                        </div>
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-orange-500">
+                            <i class="devicon-python-plain colored text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">Python</span>
+                        </div>
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-orange-500">
+                            <i class="devicon-java-plain colored text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">Java</span>
+                        </div>
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-orange-500">
+                            <i class="devicon-c-plain colored text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">C</span>
+                        </div>
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-cyan-400">
+                            <i class="devicon-html5-plain colored text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">HTML5</span>
+                        </div>
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-cyan-400">
+                            <i class="devicon-css3-plain colored text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">CSS3</span>
+                        </div>
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-purple-500">
+                            <i class="devicon-scikitlearn-plain colored text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center leading-tight">Scikit-Learn</span>
+                        </div>
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-purple-500">
+                            <i class="devicon-pandas-plain colored text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">Pandas</span>
+                        </div>
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-purple-500">
+                            <i class="fas fa-brain text-purple-500 text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center leading-tight">NLP/XGBoost</span>
+                        </div>
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-yellow-500">
+                            <i class="devicon-mysql-plain colored text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">MySQL</span>
+                        </div>
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-yellow-500">
+                            <i class="devicon-github-original dark:text-white text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">GitHub</span>
+                        </div>
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-teal-500">
+                            <i class="fas fa-chart-bar text-teal-500 text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">Power BI</span>
+                        </div>
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-green-500">
+                            <i class="fas fa-file-excel text-green-600 text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">MS Excel</span>
+                        </div>
+                        <div class="tech-card w-20 h-20 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-red-500">
+                            <i class="fas fa-compass text-red-500 text-3xl mb-1"></i>
+                            <span class="text-[10px] font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">AutoCAD</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="theme-card p-8 rounded-3xl">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                <div class="theme-card p-6 md:p-8 rounded-3xl h-full flex flex-col">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
                         <div class="p-2 bg-blue-50 border border-blue-100 dark:border-transparent dark:bg-cyan-500/10 rounded-lg"><i class="fas fa-users text-blue-600 dark:text-cyan-400"></i></div> 
                         Soft Skills
                     </h3>
-                    <div class="flex flex-wrap gap-2 md:gap-3">
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Problem-Solving</span>
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Team Management</span>
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Adaptability</span>
-                        <span class="px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-slate-800/60 dark:border-white/5 rounded-xl text-gray-700 dark:text-slate-300 text-sm hover:border-blue-400 hover:text-blue-600 dark:hover:border-cyan-500/50 dark:hover:text-cyan-400 transition-colors cursor-default">Leadership</span>
+                    
+                    <div class="grid grid-cols-2 gap-4 flex-grow content-center">
+                        <div class="tech-card w-full h-32 md:h-36 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-blue-500">
+                            <i class="fas fa-puzzle-piece text-blue-500 text-4xl md:text-5xl mb-3"></i>
+                            <span class="text-xs md:text-sm font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">Problem-Solving</span>
+                        </div>
+                        <div class="tech-card w-full h-32 md:h-36 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-green-500">
+                            <i class="fas fa-users-cog text-green-500 text-4xl md:text-5xl mb-3"></i>
+                            <span class="text-xs md:text-sm font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center leading-tight">Team<br>Management</span>
+                        </div>
+                        <div class="tech-card w-full h-32 md:h-36 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-purple-500">
+                            <i class="fas fa-sync-alt text-purple-500 text-4xl md:text-5xl mb-3"></i>
+                            <span class="text-xs md:text-sm font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">Adaptability</span>
+                        </div>
+                        <div class="tech-card w-full h-32 md:h-36 rounded-2xl shadow-sm flex flex-col items-center justify-center border-b-yellow-500">
+                            <i class="fas fa-user-tie text-yellow-500 text-4xl md:text-5xl mb-3"></i>
+                            <span class="text-xs md:text-sm font-semibold text-gray-700 dark:text-slate-300 tracking-wide text-center">Leadership</span>
+                        </div>
                     </div>
                 </div>
+
+            </div>
+        </section>
+
+        <section id="coding" class="scroll-mt-32 max-w-4xl mx-auto section-spy">
+            <div class="flex items-center gap-4 mb-10" data-aos="fade-right">
+                <div class="h-[2px] w-12 bg-blue-600 dark:bg-cyan-500"></div>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Coding Profiles</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <a href="https://leetcode.com/u/95HdC1rUGz/" target="_blank" class="theme-card p-6 rounded-3xl flex items-center gap-6 group hover:-translate-y-2 transition-transform" data-aos="fade-up" data-aos-delay="100" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
+                    <div class="w-16 h-16 rounded-2xl bg-orange-50 dark:bg-orange-500/10 flex items-center justify-center text-orange-500 group-hover:scale-110 transition-transform duration-300 shadow-inner">
+                        <i class="fas fa-code text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-orange-500 transition-colors">LeetCode</h3>
+                        <p class="text-sm text-gray-500 dark:text-slate-400 font-medium">150+ Problems Solved</p>
+                        <p class="text-xs text-orange-500 mt-2 font-semibold tracking-wide uppercase">View Profile &rarr;</p>
+                    </div>
+                </a>
+
+                <a href="https://github.com/ishan0012" target="_blank" class="theme-card p-6 rounded-3xl flex items-center gap-6 group hover:-translate-y-2 transition-transform" data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
+                    <div class="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-800 dark:text-white group-hover:scale-110 transition-transform duration-300 shadow-inner">
+                        <i class="fab fa-github text-3xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-blue-500 transition-colors">GitHub</h3>
+                        <p class="text-sm text-gray-500 dark:text-slate-400 font-medium">Top Langs: Python, C++</p>
+                        <p class="text-xs text-blue-600 dark:text-cyan-400 mt-2 font-semibold tracking-wide uppercase">View Repos &rarr;</p>
+                    </div>
+                </a>
             </div>
         </section>
 
@@ -536,6 +658,39 @@
         <p class="text-gray-500 dark:text-slate-600 font-medium text-sm">© 2026 Ishan Arora. Designed with modern web standards.</p>
     </footer>
 
+    <div id="ai-bot-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        
+        <div id="ai-chat-window" class="hidden w-80 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-white/10 mb-4 overflow-hidden flex flex-col transition-all transform origin-bottom-right">
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 text-white flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-robot text-xl"></i>
+                    <h3 class="font-bold tracking-wide">ByteBuddy</h3>
+                </div>
+                <button id="close-bot" class="hover:text-gray-200 transition-colors"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div id="chat-messages" class="h-64 p-4 overflow-y-auto flex flex-col gap-3 bg-gray-50 dark:bg-slate-900/50 text-sm scroll-smooth">
+                <div class="bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200 p-3 rounded-lg rounded-tl-none self-start max-w-[85%] leading-relaxed border border-indigo-200 dark:border-indigo-800">
+                    Hi! I'm <b>ByteBuddy</b>, Ishan's AI Assistant. Ask me to <b>"download CV"</b>, <b>"view CV"</b>, <b>"go to projects"</b>, or switch to <b>"dark mode"</b>!
+                </div>
+            </div>
+            
+            <div class="p-3 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-white/10 flex gap-2">
+                <input type="text" id="bot-input" class="flex-grow bg-gray-100 dark:bg-slate-700 text-gray-900 dark:text-white rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-purple-400 text-sm" placeholder="Type a command...">
+                <button id="mic-btn" class="bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-gray-300 w-10 h-10 rounded-lg hover:bg-gray-300 dark:hover:bg-slate-600 transition flex items-center justify-center" title="Click and allow microphone access">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <button id="send-btn" class="bg-indigo-600 dark:bg-purple-500 text-white w-10 h-10 rounded-lg hover:bg-indigo-700 dark:hover:bg-purple-400 transition flex items-center justify-center">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <button id="toggle-bot" class="bot-pulse w-14 h-14 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-[0_0_20px_rgba(124,58,237,0.4)] hover:scale-110 transition-transform flex items-center justify-center text-2xl">
+            <i class="fas fa-robot"></i>
+        </button>
+    </div>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     
@@ -640,14 +795,13 @@
         });
 
         // 7. Scroll Spy (Active Navigation) Logic
-        const sections = document.querySelectorAll('section');
+        const sections = document.querySelectorAll('section.section-spy');
         const navLinks = document.querySelectorAll('.nav-link');
 
         window.addEventListener('scroll', () => {
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
                 if (pageYOffset >= (sectionTop - 200)) {
                     current = section.getAttribute('id');
                 }
@@ -660,6 +814,125 @@
                 }
             });
         });
+
+        // 8. AI Assistant Logic
+        const botContainer = document.getElementById('ai-bot-container');
+        const chatWindow = document.getElementById('ai-chat-window');
+        const toggleBotBtn = document.getElementById('toggle-bot');
+        const closeBotBtn = document.getElementById('close-bot');
+        const chatMessages = document.getElementById('chat-messages');
+        const botInput = document.getElementById('bot-input');
+        const sendBtn = document.getElementById('send-btn');
+        const micBtn = document.getElementById('mic-btn');
+
+        toggleBotBtn.addEventListener('click', () => {
+            chatWindow.classList.toggle('hidden');
+            if(!chatWindow.classList.contains('hidden')) {
+                toggleBotBtn.classList.remove('bot-pulse');
+                botInput.focus();
+            }
+        });
+        
+        closeBotBtn.addEventListener('click', () => chatWindow.classList.add('hidden'));
+
+        function addMessage(text, isUser = false) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `p-3 rounded-lg max-w-[85%] text-sm leading-relaxed ${isUser ? 'bg-indigo-600 dark:bg-purple-600 text-white self-end rounded-tr-none' : 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200 self-start rounded-tl-none border border-indigo-200 dark:border-indigo-800'}`;
+            msgDiv.innerHTML = text;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function processCommand(command) {
+            const cmd = command.toLowerCase();
+            let response = "I didn't quite catch that. Try <b>'go to projects'</b>, <b>'show skills'</b>, or <b>'download CV'</b>.";
+            
+            if (cmd.includes('download') && (cmd.includes('cv') || cmd.includes('resume'))) {
+                document.getElementById('download-cv-btn').click();
+                response = "Downloading Ishan's CV right away!";
+            } else if ((cmd.includes('view') || cmd.includes('open')) && (cmd.includes('cv') || cmd.includes('resume'))) {
+                document.getElementById('view-cv-btn').click();
+                response = "Opening Ishan's CV in a new tab!";
+            } else if (cmd.includes('about')) {
+                document.getElementById('about').scrollIntoView({behavior: 'smooth'});
+                response = "Scrolling to the About section!";
+            } else if (cmd.includes('education') || cmd.includes('school') || cmd.includes('college')) {
+                document.getElementById('education').scrollIntoView({behavior: 'smooth'});
+                response = "Here is Ishan's educational background.";
+            } else if (cmd.includes('training')) {
+                document.getElementById('training').scrollIntoView({behavior: 'smooth'});
+                response = "Navigating to Technical Training.";
+            } else if (cmd.includes('cert') || cmd.includes('certificate')) {
+                document.getElementById('certificates').scrollIntoView({behavior: 'smooth'});
+                response = "Here are Ishan's latest certifications.";
+            } else if (cmd.includes('skill') || cmd.includes('tech stack')) {
+                document.getElementById('skills').scrollIntoView({behavior: 'smooth'});
+                response = "Here is Ishan's Tech Stack and Soft Skills.";
+            } else if (cmd.includes('code') || cmd.includes('profile') || cmd.includes('leetcode') || cmd.includes('github')) {
+                document.getElementById('coding').scrollIntoView({behavior: 'smooth'});
+                response = "Checking out coding profiles!";
+            } else if (cmd.includes('project')) {
+                document.getElementById('projects').scrollIntoView({behavior: 'smooth'});
+                response = "Check out these awesome projects!";
+            } else if (cmd.includes('contact') || cmd.includes('hire') || cmd.includes('email') || cmd.includes('touch')) {
+                document.getElementById('contact').scrollIntoView({behavior: 'smooth'});
+                response = "Let's get in touch!";
+            } else if (cmd.includes('dark')) {
+                if(!htmlElement.classList.contains('dark')) themeToggleBtn.click();
+                response = "Switched to Dark Mode!";
+            } else if (cmd.includes('light')) {
+                if(htmlElement.classList.contains('dark')) themeToggleBtn.click();
+                response = "Switched to Light Mode!";
+            } else if (cmd.includes('top') || cmd.includes('home') || cmd.includes('up')) {
+                window.scrollTo({top: 0, behavior: 'smooth'});
+                response = "Going back to the top!";
+            }
+
+            setTimeout(() => addMessage(response, false), 600);
+        }
+
+        function handleSend() {
+            const text = botInput.value.trim();
+            if (!text) return;
+            addMessage(text, true);
+            botInput.value = '';
+            processCommand(text);
+        }
+
+        sendBtn.addEventListener('click', handleSend);
+        botInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
+
+        // Voice Recognition (Web Speech API)
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = function() {
+                micBtn.classList.add('bg-red-500', 'text-white');
+                micBtn.classList.remove('bg-gray-200', 'dark:bg-slate-700', 'text-gray-600', 'dark:text-gray-300');
+                botInput.placeholder = "Listening...";
+            };
+
+            recognition.onspeechend = function() {
+                micBtn.classList.remove('bg-red-500', 'text-white');
+                micBtn.classList.add('bg-gray-200', 'dark:bg-slate-700', 'text-gray-600', 'dark:text-gray-300');
+                botInput.placeholder = "Type a command...";
+            };
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                botInput.value = transcript;
+                handleSend();
+            };
+
+            micBtn.addEventListener('click', () => {
+                recognition.start();
+            });
+        } else {
+            micBtn.style.display = 'none'; 
+        }
     </script>
 </body>
 </html>
